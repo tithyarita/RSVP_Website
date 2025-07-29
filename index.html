@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="head">
-        <h2>Will You Attend Our Wedding?</h2>
-        <span>Please let us know wheater or not can make it to our wedding.</span>
+        <h2>Will You Attend Our Events?</h2>
+        <span>Please let us know wheater or not can make it to our Events.</span>
     </div>
     <hr>
 
@@ -32,12 +32,12 @@
 
             <div class="input">
                 <div class="input1">
-                    <input type="text" id="fname" name="fname"><br>
+                    <input autocomplete="off" type="text" id="fname" name="fname"><br>
                     <span>First Name</span>
                 </div>
 
                 <div class="input2">
-                    <input type="text" id="fname" name="fname"><br>
+                    <input autocomplete="off" type="text" id="fname" name="fname"><br>
                     <span>Last Name</span>
                 </div>
             </div>
@@ -49,11 +49,21 @@
             <input style="width: 17%; height: 30px;" type="text" id="fname" name="fname" placeholder="ex:myname@gmail.com" autocomplete="off"><br>
             <span">input the E-mail</span>
         </div>
+                <div class="div5">
+            <p>Choose the Events</p>
+            <select name="event" id="event" autocomplete="off" style="width: 17%; height: 35px;">
+                <option value="0">please select</option>
+                <option value="1">Art Workshop</option>
+                <option value="2">Fashion Workshop</option>
+                <option value="3">Technology Workshop</option>
+                <option value="4">Design Workshop</option>
+            </select>
+        </div>
         
 
         <div class="div4">
             <p>Number of Adults</p>
-            <select name="adults" id="adults" style="width: 17%; height: 35px;">
+            <select name="adults" id="adults" autocomplete="off" style="width: 17%; height: 35px;">
                 <option value="0">please select</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -79,10 +89,9 @@
         </div>
 
 
-
         <div class="div5">
             <p>Number of Children</p>
-            <select name="adults" id="adults" style="width: 17%; height: 35px;">
+            <select name="adults" id="adults" autocomplete="off" style="width: 17%; height: 35px;">
                 <option value="0">please select</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -108,8 +117,8 @@
         </div>
 
         <div class="div6">
-            <p>Massage to the Bride and Groom</p>
-            <input type="text" style="width: 75%; height: 200px;" placeholder="Massage here">
+            <p>Message to the Bride and Groom</p>
+            <input type="text" style="width: 75%; height: 200px;" placeholder="Mssage here">
         </div>
 
         <div class="div7">
