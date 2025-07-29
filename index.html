@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSVP_website</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="head">
         <h2>Will You Attend Our Wedding?</h2>
@@ -16,15 +18,19 @@
     <div class="container">
         <div class="div1">
             <p>Can You Attend?</p>
-            <div class="label1">
-                <input type="radio" id="html" name="fav_language" value="HTML">
-                <label for="html">can attend</label><br>
+
+            <div id="radioBox">
+                <div class="label1">
+                    <input type="radio" id="rad1" name="fav_language" value="can attend">
+                      <label for="html">can attend</label><br>
+                </div>
+
+                <div class="label2">
+                      <input type="radio" id="rad2" name="fav_language" value="can't attend">
+                      <label for="css">can't attend</label>
+                </div>
             </div>
 
-            <div class="label2">
-                <input type="radio" id="css" name="fav_language" value="CSS">
-                <label for="css">can't attend</label>
-            </div>
         </div>
 
         <div class="div2">
@@ -32,24 +38,25 @@
 
             <div class="input">
                 <div class="input1">
-                    <input type="text" id="fname" name="fname"><br>
+                    <input type="text" id="fname"><br>
                     <span>First Name</span>
                 </div>
 
                 <div class="input2">
-                    <input type="text" id="fname" name="fname"><br>
+                    <input type="text" id="lname"><br>
                     <span>Last Name</span>
                 </div>
             </div>
-            
+
         </div>
 
         <div class="div3">
             <p>E-mail</p>
-            <input style="width: 17%; height: 30px;" type="text" id="fname" name="fname" placeholder="ex:myname@gmail.com" autocomplete="off"><br>
+            <input style="width: 17%; height: 30px;" type="text" id="email"
+                placeholder="ex:myname@gmail.com" autocomplete="off"><br>
             <span">input the E-mail</span>
         </div>
-        
+
 
         <div class="div4">
             <p>Number of Adults</p>
@@ -75,14 +82,14 @@
                 <option value="18">18</option>
                 <option value="19">19</option>
                 <option value="20">20</option>
-                </select>
+            </select>
         </div>
 
 
 
         <div class="div5">
             <p>Number of Children</p>
-            <select name="adults" id="adults" style="width: 17%; height: 35px;">
+            <select name="adults" id="children" style="width: 17%; height: 35px;">
                 <option value="0">please select</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -104,17 +111,19 @@
                 <option value="18">18</option>
                 <option value="19">19</option>
                 <option value="20">20</option>
-                </select>
+            </select>
         </div>
 
         <div class="div6">
             <p>Massage to the Bride and Groom</p>
-            <input type="text" style="width: 75%; height: 200px;" placeholder="Massage here">
+            <input id="massageBox" type="text" style="width: 75%; height: 200px;" placeholder="Massage here">
         </div>
 
         <div class="div7">
-            <input type="submit" value="submit">
+            <input id="submitBtn" type="submit" value="submit">
         </div>
     </div>
 </body>
+<script src="../js/form.js"></script>
+
 </html>
