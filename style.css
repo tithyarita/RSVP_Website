@@ -10,7 +10,7 @@ body{
 .div5,
 .div6,
 .div7{
-    padding: 2%;
+    padding: 1%;
 }
 
 .label2{
@@ -43,5 +43,9 @@ body{
 
 .div7 input:hover{
     background-color: rgb(237, 93, 93);
+}
+
+span{
+    color: rgb(148, 141, 141);
 }
 
