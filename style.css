@@ -1,0 +1,46 @@
+body{
+    margin: 0;
+}
+
+.head,
+.div1,
+.div2,
+.div3,
+.div4,
+.div5,
+.div6,
+.div7{
+    padding: 2%;
+}
+
+.label2{
+    margin-left: -7.5px;
+}
+
+.input{
+    display:flex;
+    gap: 8%;
+}
+
+.input input{
+    width: 150%;
+    height: 70%;
+}
+
+.div7{
+    align-items: center;
+    text-align: center;
+}
+
+.div7 input{
+    background-color: red;
+    width: 10%;
+    height: 40px;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+}
+
+.div7 input:hover{
+    background-color: rgb(237, 93, 93);
+}
