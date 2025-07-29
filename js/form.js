@@ -14,8 +14,18 @@ const userLname = document.getElementById("lname").value;
 // email
 const userEmail = document.getElementById("email").value;
 
-// camboBoxes
-const mySelecting = document.getElementById("adults");
+// phonenumber
+const userNum = document.getElementById("phoneNum").value;
+
+// event
+const userEvent = document.getElementById("event").value;
+
+// camboBoxAdults
+const mySelecting = document.getElementById("adults").value;
+console.log(mySelecting);
+
+// camboBoxChildren
+const mySelecting2 = document.getElementById("child").value;
 console.log(mySelecting);
 
 // massageBox
@@ -38,14 +48,24 @@ myBtn.addEventListener("click", () => {
     console.log(userFname);
     const userLname = document.getElementById("lname").value;
 
+
     // email
     const userEmail = document.getElementById("email").value;
 
-    // camboBoxes
-    const mySelecting = document.getElementById("adults");
+    // phonenumber
+    const userNum = document.getElementById("phoneNum").value;
 
-    //camboBoxes2
-    const mySelecting2 = document.getElementById("children");
+
+    // event
+    const userEvent = document.getElementById("event").value;
+
+    // camboBoxAdults
+    const mySelecting = document.getElementById("adults").value;
+    console.log(mySelecting);
+
+    // camboBoxChildren
+    const mySelecting2 = document.getElementById("child").value;
+    console.log(mySelecting);
 
     // massageBox
     const myMessageBox = document.getElementById("massageBox").value;
@@ -56,9 +76,11 @@ myBtn.addEventListener("click", () => {
         "firstName": userFname,
         "lastName": userLname,
         "email": userEmail,
-        "adultNumber": mySelecting.value,
-        "messages": myMessageBox,
-        "childrenNumber": mySelecting2.value
+        "phoneNumber": userNum,
+        "events": userEvent,
+        "adult": mySelecting,
+        "children": mySelecting2,
+        "massages": myMessageBox
 
     }
 
