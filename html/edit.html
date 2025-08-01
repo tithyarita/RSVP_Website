@@ -1,51 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Page</title>
     <link rel="stylesheet" href="../css/edit.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
+
 <body>
-    <div class="container">
+    <div data-aos="flip-right" class="container">
         <i class="fa-solid fa-arrow-left"></i>
         <img src="../image/profile-removebg-preview.png" id="pf-photo" alt="Profile Photo">
         <label for="input-file">Upload Profile</label>
         <div class="change-pf">
-        <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file">
+            <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file">
         </div>
-        <div class="div1"><p>Full Name: </p><input id="fullName" type="text" autocomplete="off"></div><hr>
-        <div class="div2"><p>ID: </p><input type="text" autocomplete="off"></div><hr>
-        <div class="div3"><p>Email: </p><input type="email" autocomplete="off"></div><hr>
-        <div class="div4"><p>Phone: </p><input type="text" autocomplete="off"></div><hr>
-        <div class="div5"><p>Address: </p><input type="text" autocomplete="off"></div>
+        <div class="div1">
+            <p>First Name: </p><input id="fname2" type="text" autocomplete="off">
+        </div> 
+        <hr>
+
+         <div class="div1">
+            <p>Last Name: </p><input id="lname2" type="text" autocomplete="off">
+        </div> 
+        
+        <hr>
+        <div class="div2">
+            <p>ID: </p><input id="user-id" type="text" autocomplete="off">
+        </div>
+        <hr>
+        <div class="div3">
+            <p>Email: </p><input id="user-email" type="email" autocomplete="off">
+        </div>
+        <hr>
+        <div class="div4">
+            <p>Phone: </p><input id="user-num" type="text" autocomplete="off">
+        </div>
+        <hr>
+        <div class="div5">
+            <p>Address: </p><input id="user-add" type="text" autocomplete="off">
+        </div>
+
+        <div class="div5">
+            <p>Date: </p><input id="user-date" type="date" autocomplete="off">
+        </div>
         <div class="save">
             <button id="btnSave">SAVE</button>
         </div>
     </div>
+
+      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 
     <script>
         let pfpic = document.getElementById("pf-photo");
         let inputfile = document.getElementById("input-file");
 
         inputfile.addEventListener("change", () => {
-            
-                pfpic.src = URL.createObjectURL(inputfile.files[0]);
-            
+            const file = inputfile.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                const base64Image = reader.result;
+                pfpic.src = base64Image;
+
+                
+                localStorage.setItem("userProfileImage", base64Image);
+            };
+
+            if (file) {
+                reader.readAsDataURL(file); 
+            }
         });
+
 
         let mySaveBtn = document.getElementById("btnSave");
 
-        mySaveBtn.addEventListener("click", ()=>{
-              let myFullName = document.querySelector("#fullName");
-              let  = document.querySelector("#fullName");
-              let myFullName = document.querySelector("#fullName");
-              let myFullName = document.querySelector("#fullName");
-              let myFullName = document.querySelector("#fullName");
+        mySaveBtn.addEventListener("click", () => {
+            let userFname = document.querySelector("#fname2").value;
+            let userLname = document.querySelector("#lname2").value;
+            let userId = document.querySelector("#user-id").value;
+            let userEmail2 = document.querySelector("#user-email").value;
+            let userNum2 = document.querySelector("#user-num").value;
+            let userAdd = document.querySelector("#user-add").value;
+            let userDate = document.getElementById("user-date").value;
 
-        })
+            const myUserInfo = {
+                userFname,
+                userLname,
+                userId,
+                userEmail2,
+                userNum2,
+                userAdd,
+                userDate
+            }
+
+            console.log(myUserInfo);
+
+            localStorage.setItem("myObj", JSON.stringify(myUserInfo));
+            window.location.href = "./user.html";
+
+        });
 
     </script>
 </body>
+
 </html>

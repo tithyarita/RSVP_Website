@@ -19,18 +19,26 @@
     <div class="container">
         <div class="user">
             <img src="../image/profile-removebg-preview.png" id="pf-image">
-            <p>Name</p>
+            <p id="userFullName">Name</p>
             <a href="../html/edit.html"><label for="input-file">Edit</label></a>
         </div>
 
         <div class="detail">
             <div class="div1">
                 <h1>About</h1>
-                <p>Full Name :</p><hr>
-                <p>ID :</p><hr>
-                <p>Email :</p><hr>
-                <p>Phone :</p><hr>
-                <p>Address :</p>
+                <div style="display: flex; gap: 15rem;">
+                     <p id="fName3">First Name :</p>
+                     <p id="lName3">Lasst Nam :</p>
+                </div>
+                
+                <p id="userId2"></p><hr>
+                <p id="userEmail2"></p><hr>
+                <p id="userPhone2"></p><hr>
+            <div style="display: flex; gap: 20rem;">
+                  <p id="userAddress"></p>
+                <p id="userDate2"></p>
+            </div>
+               
             </div>
 
             <div class="div2">
@@ -39,5 +47,58 @@
             </div>
         </div>
     </div>
+
+    <div id="getData"></div>
 </body>
+<script>
+        let myGetData = document.querySelector("#getData");
+
+        let myInfor = localStorage.getItem("myObj");
+        let fnData = JSON.parse(myInfor);
+        console.log(fnData);
+
+        //image
+
+        const myUploadImg = localStorage.getItem("userProfileImage");
+        console.log(myUploadImg);
+
+
+        let myProfileImage = document.querySelector("#pf-image");
+        myProfileImage.src = myUploadImg;
+
+        
+        let fName3 = document.getElementById("fName3");
+        fName3.textContent = `First Name: ${fnData.userFname}`;
+
+        let lName3 = document.getElementById("lName3");
+        lName3.textContent = `Last Name: ${fnData.userLname}`;
+
+        let idUser2 = document.getElementById("userId2");
+        idUser2.textContent = `ID: ${fnData.userId}`;
+
+        let userEmail2 = document.getElementById("userEmail2");
+        userEmail2.textContent = `Email: ${fnData.userEmail2}`;
+
+        let phone2 = document.getElementById("userPhone2");
+        phone2.textContent = `Phone: ${fnData.userNum2}`;
+
+        let userAddress2 = document.getElementById("userAddress");
+        userAddress2.textContent = `Address: ${fnData.userAdd}`;
+
+        let fullName = document.getElementById("userFullName");
+        fullName.textContent = `Name: ${fnData.userFname} ${fnData.userLname}`;
+
+        let myUserDate = document.getElementById("userDate2");
+        myUserDate.textContent = `Date: ${fnData.userDate}`;
+
+
+
+
+
+
+        
+
+        
+
+</script>
 </html>
