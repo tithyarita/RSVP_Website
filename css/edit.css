@@ -1,0 +1,56 @@
+body{
+    background-color: grey;
+}
+
+.div1,
+.div2,
+.div3,
+.div4,
+.div5{
+    display: flex;
+    align-items: center;
+    border-radius: 1rem;
+    gap: 30px;
+    margin-top: 15px;
+    margin-left: 15px;
+    justify-content: space-between;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+input{
+    padding: 7px;
+    width: 250px;
+}
+
+.container{
+    background-color:white;
+    text-align: center;
+    width: 30%;
+    margin-left: 500px;
+    height: 650px;
+    margin-top: 2%;
+}
+
+img{
+    width: 200px;
+    padding: 10px;
+    height: 200px;
+    border-radius: 20rem;
+}
+
+label{
+    display: block;
+    background-color: red;
+    width: 200px;
+    padding: 12px;
+    border-radius: 1rem;
+    margin: auto;
+    cursor: pointer;
+    font-weight: bold;
+    
+}
+
+.change-pf input{
+    display: none;
+}

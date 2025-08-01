@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Page</title>
+    <link rel="stylesheet" href="/css/edit.css">
+</head>
+<body>
+    <div class="container">
+        <img src="/image/profile-removebg-preview.png" id="pf-photo" alt="Profile Photo">
+        <label for="input-file">Upload Profile</label>
+        <div class="change-pf">
+        <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file">
+        </div>
+        <div class="div1"><p>Full Name: </p><input type="text" autocomplete="off"></div><hr>
+        <div class="div2"><p>ID: </p><input type="text" autocomplete="off"></div><hr>
+        <div class="div3"><p>Email: </p><input type="text" autocomplete="off"></div><hr>
+        <div class="div4"><p>Phone: </p><input type="text" autocomplete="off"></div><hr>
+        <div class="div5"><p>Address: </p><input type="text" autocomplete="off"></div>
+    </div>
+
+    <script>
+        let pfpic = document.getElementById("pf-photo");
+        let inputfile = document.getElementById("input-file");
+
+        inputfile.addEventListener("change", () => {
+            
+                pfpic.src = URL.createObjectURL(inputfile.files[0]);
+            
+        });
+    </script>
+</body>
+</html>
