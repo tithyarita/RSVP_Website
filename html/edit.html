@@ -15,13 +15,13 @@
         <div class="change-pf">
         <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file">
         </div>
-        <div class="div1"><p>Full Name: </p><input type="text" autocomplete="off"></div><hr>
+        <div class="div1"><p>Full Name: </p><input id="fullName" type="text" autocomplete="off"></div><hr>
         <div class="div2"><p>ID: </p><input type="text" autocomplete="off"></div><hr>
         <div class="div3"><p>Email: </p><input type="text" autocomplete="off"></div><hr>
         <div class="div4"><p>Phone: </p><input type="text" autocomplete="off"></div><hr>
         <div class="div5"><p>Address: </p><input type="text" autocomplete="off"></div>
         <div class="save">
-            <button>SAVE</button>
+            <button id="btnSave">SAVE</button>
         </div>
     </div>
 
@@ -34,6 +34,18 @@
                 pfpic.src = URL.createObjectURL(inputfile.files[0]);
             
         });
+
+        let mySaveBtn = document.getElementById("btnSave");
+
+        mySaveBtn.addEventListener("click", ()=>{
+              let myFullName = document.querySelector("#fullName");
+              let  = document.querySelector("#fullName");
+              let myFullName = document.querySelector("#fullName");
+              let myFullName = document.querySelector("#fullName");
+              let myFullName = document.querySelector("#fullName");
+
+        })
+
     </script>
 </body>
 </html>
