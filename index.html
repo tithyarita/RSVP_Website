@@ -1,145 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSVP_website</title>
     <link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RSVP Website</title>
 </head>
-
 <body>
-    <div class="head">
-        <h2>Will You Attend Our Events?</h2>
-        <span>Please let us know wheater or not can make it to our Events.</span>
+  <h2>Will You Attend Our Events?</h2>
+  <p class="p1">Please let us know whether or not can make it to our Events</p>
+  <hr>
+
+  <form id="rsvpForm">
+    <p>Can You Attend?</p>
+    <label><input type="radio" name="attendance" value="can attend" required> Can attend</label>
+    <br>
+    <label><input type="radio" name="attendance" value="can't attend"> Can't attend</label>
+
+    <p>Full Name</p>
+    <input type="text" id="fname" placeholder="First Name" required />
+    <input type="text" id="lname" placeholder="Last Name" required />
+
+    <p>Email</p>
+    <input type="email" id="email" placeholder="example@mail.com" required />
+
+    <p>Phone Number</p>
+    <input type="tel" id="phoneNum" placeholder="+855 XXX XXX" required />
+
+    <p>Choose the Event</p>
+    <select id="event" required>
+      <option value="">Please select</option>
+      <option value="event1">Art Workshop</option>
+      <option value="event2">Fashion Workshop</option>
+      <option value="event3">Technology Workshop</option>
+      <option value="event4">Design Workshop</option>
+    </select>
+
+    <p>Number of Adults</p>
+    <input type="number" id="adults" min="0" max="20" value="0" />
+
+    <p>Number of Children</p>
+    <input type="number" id="children" min="0" max="20" value="0" />
+    
+    <p>Message to the Bride and Groom</p>
+    <div class="div7">
+    <textarea id="message" placeholder="Message here..."></textarea>
+
+    <button type="submit">Submit</button>
     </div>
-    <hr>
 
-    <div class="container">
-        <div class="div1">
-            <p>Can You Attend?</p>
+    
+  </form>
 
-            <div id="radioBox">
-                <div class="label1">
-                    <input type="radio" id="rad1" name="fav_language" value="can attend">
-                      <label for="html">can attend</label><br>
-                </div>
-
-                <div class="label2">
-                      <input type="radio" id="rad2" name="fav_language" value="can't attend">
-                      <label for="css">can't attend</label>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="div2">
-            <p>Full Name</p>
-
-            <div class="input">
-                <div class="input1">
-                    <input autocomplete="off" type="text" id="fname" name="fname"><br>
-                    <span>First Name</span>
-                </div>
-
-                <div class="input2">
-                    <input autocomplete="off" type="text" id="lname" name="fname"><br>
-                    <span>Last Name</span>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="div3">
-            <p>E-mail</p>
-            <input type="text" id="email"
-            placeholder="ex:myname@gmail.com" autocomplete="off"><br>
-            <span>input the E-mail</span>
-        </div>
-
-        <div class="div9">
-            <p> Telephone Number</p>
-            <input type="text" id="phoneNum"
-                placeholder="ex: +855 XXX XXX" autocomplete="off"><br>
-            <span>input your phone number</span>
-        </div>
-
-                <div class="div8">
-            <p>Choose the Events</p>
-            <select name="event" id="event" autocomplete="off">
-                <option value="please select">please select</option>
-                <option value="Art Workshop">Art Workshop</option>
-                <option value="Fashion Workshop">Fashion Workshop</option>
-                <option value="Technology Workshop">Technology Workshop</option>
-                <option value="Design Workshop">Design Workshop</option>
-            </select>
-        </div>
-        
-
-        <div class="div4">
-            <p>Number of Adults</p>
-            <select name="adults" id="adults" autocomplete="off">
-                <option value="0">please select</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-            </select>
-        </div>
-
-
-        <div class="div5">
-            <p>Number of Children</p>
-            <select name="adults" id="child" autocomplete="off">
-                <option value="0">please select</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-            </select>
-        </div>
-
-        <div class="div6">
-            <p>Massage to the Bride and Groom</p>
-            <input id="massageBox" type="text" placeholder="Massage here">
-        </div>
-
-        <div class="div7">
-            <input id="submitBtn" type="submit" value="submit">
-        </div>
-    </div>
+  <script type="module" src="script.js"></script>
 </body>
-<script src="./js/form.js"></script>
 </html>

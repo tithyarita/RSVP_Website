@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Event - Admin Dashboard</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let fields = [];
+
+    window.addField = () => {
+      const type = document.getElementById('fieldType').value;
+      const label = document.getElementById('fieldLabel').value;
+      const options = document.getElementById('fieldOptions').value;
+
+      if (!label) return alert("Please enter a field label!");
+
+      fields.push({ type, label, options });
+      renderPreview();
+    };
+
+    window.removeField = (index) => {
+      fields.splice(index, 1);
+      renderPreview();
+    };
+
+    function renderPreview() {
+      const preview = document.getElementById('formPreview');
+      preview.innerHTML = '';
+      fields.forEach((field, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = `<strong>${field.label}</strong><br>`;
+        if (field.type === 'text' || field.type === 'email') {
+          wrapper.innerHTML += `<input type="${field.type}" placeholder="${field.label}" disabled><br>`;
+        } else if (field.type === 'dropdown') {
+          const opts = field.options.split(',').map(opt => `<option>${opt.trim()}</option>`).join('');
+          wrapper.innerHTML += `<select disabled>${opts}</select><br>`;
+        } else if (field.type === 'radio') {
+          const radios = field.options.split(',').map(opt =>
+            `<label><input type="radio" disabled> ${opt.trim()}</label>`
+          ).join('<br>');
+          wrapper.innerHTML += radios + '<br>';
+        }
+        wrapper.innerHTML += `<button onclick="removeField(${index})">Remove</button><hr>`;
+        preview.appendChild(wrapper);
+      });
+    }
+
+    window.saveEvent = async () => {
+      const name = document.getElementById('eventName').value;
+      const date = document.getElementById('eventDate').value;
+      if (!name || !date) return alert("Fill in event name and date!");
+
+      const eventData = { name, date, fields };
+      await addDoc(collection(db, "events"), eventData);
+      alert("Event saved!");
+      window.location.href = "dashboard.html"; // Go back to admin list
+    };
+  </script>
+
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+    input, select, button { margin: 5px 0; padding: 8px; }
+    #formPreview { background: #fff; padding: 15px; border-radius: 6px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <h2>Create New Event</h2>
+
+  <label>Event Name:</label><br>
+  <input type="text" id="eventName" placeholder="Enter event name"><br>
+
+  <label>Event Date:</label><br>
+  <input type="date" id="eventDate"><br><br>
+
+  <h3>Add Form Fields</h3>
+  <select id="fieldType">
+    <option value="text">Text Input</option>
+    <option value="email">Email Input</option>
+    <option value="dropdown">Dropdown List</option>
+    <option value="radio">Radio Buttons</option>
+  </select><br>
+  <input type="text" id="fieldLabel" placeholder="Field Label"><br>
+  <input type="text" id="fieldOptions" placeholder="Options (comma-separated)"><br>
+  <button onclick="addField()">Add Field</button><br><br>
+
+  <h3>Form Preview</h3>
+  <div id="formPreview"></div>
+
+  <br>
+  <button onclick="saveEvent()" style="background: green; color: white;">Save Event</button>
+
+</body>
+</html>

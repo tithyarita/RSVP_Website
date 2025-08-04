@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Form Builder</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+    .form-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+    .form-row input, .form-row select {
+      padding: 5px;
+    }
+    .remove-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      cursor: pointer;
+    }
+    #formFields {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Create New Event</h2>
+  <input type="text" id="eventName" placeholder="Event Name"><br><br>
+  <input type="date" id="eventDate"><br><br>
+
+  <h3>Form Fields</h3>
+  <div id="formFields"></div>
+
+  <div class="form-row">
+    <select id="fieldType">
+      <option value="text">Text Input</option>
+      <option value="email">Email Input</option>
+      <option value="radio">Radio Buttons</option>
+      <option value="dropdown">Dropdown List</option>
+    </select>
+    <input type="text" id="fieldLabel" placeholder="Field Label">
+    <input type="text" id="fieldOptions" placeholder="Options (comma-separated)">
+    <button onclick="addField()">Add Form Field</button>
+  </div>
+
+  <button onclick="saveEvent()" style="background-color: #007bff; color: white;">Save Event</button>
+
+  <script>
+    let fields = [];
+
+    function addField() {
+      const type = document.getElementById('fieldType').value;
+      const label = document.getElementById('fieldLabel').value;
+      const options = document.getElementById('fieldOptions').value;
+
+      if (!label) return alert("Please enter a field label!");
+
+      const field = { type, label, options };
+      fields.push(field);
+      renderFields();
+    }
+
+    function removeField(index) {
+      fields.splice(index, 1);
+      renderFields();
+    }
+
+    function renderFields() {
+      const container = document.getElementById('formFields');
+      container.innerHTML = '';
+      fields.forEach((field, index) => {
+        const div = document.createElement('div');
+        div.className = 'form-row';
+
+        div.innerHTML = `
+          <select disabled>
+            <option>${field.type}</option>
+          </select>
+          <input type="text" value="${field.label}" disabled>
+          <input type="text" value="${field.options}" disabled>
+          <button class="remove-btn" onclick="removeField(${index})">Remove</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function saveEvent() {
+      const name = document.getElementById('eventName').value;
+      const date = document.getElementById('eventDate').value;
+
+      if (!name || !date) return alert("Please fill in event name and date!");
+
+      const eventData = {
+        name,
+        date,
+        fields,
+      };
+
+      console.log("Saving Event:", eventData);
+      // 🚀 Save to Firebase or database here
+
+      alert("Event saved!");
+    }
+  </script>
+
+</body>
+</html>
