@@ -1,0 +1,95 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: grey;
+    margin-top: 5rem;
+}
+
+.div1,
+.div2,
+.div3,
+.div4,
+.div5{
+    display: flex;
+    align-items: center;
+    border-radius: 1rem;
+    gap: 30px;
+    margin-top: 15px;
+    margin-left: 15px;
+    justify-content: space-between;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+input{
+    padding: 7px;
+    width: 250px;
+}
+
+.container{
+    background-color:white;
+    text-align: center;
+    width: 30%;
+    margin-left: 500px;
+    height: 580px;
+    border-radius: 1rem;
+    box-shadow: 5px 5px 30px rgb(218, 217, 222);
+    
+}
+
+img{
+    width: 100px;
+    padding: 10px;
+    height: 100px;
+    border-radius: 20rem;
+    margin-right: 1.5rem;
+}
+
+label{
+    display: block;
+    background-color: red;
+    width: 200px;
+    padding: 12px;
+    border-radius: 1rem;
+    margin: auto;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+
+label:hover{
+    background-color: rgb(193, 25, 25);
+}
+
+.change-pf input{
+    display: none;
+} 
+
+button{
+    background-color: red;
+    color: white;
+    border-style: none;
+    border-radius: 1rem;
+    padding: 10px;
+    width: 20%;
+    font-weight: bold;
+    margin-top: 1rem;
+
+}
+
+button:hover{
+    background-color:  rgb(193, 25, 25);
+}
+
+i{
+    position: relative;
+    bottom: 5rem;
+    right: 7rem;
+    font-size: 25px;
+}
+
+i:hover{
+    color: blue;
+}

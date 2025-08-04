@@ -1,0 +1,136 @@
+body{
+    margin: 0;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(66, 145, 218, 0.858);
+    position: fixed;
+    width: 99%;
+    margin-top: -21px;
+    padding: 10px;
+}
+
+.div1{
+    display: flex;
+    gap: 20px;
+    font-weight: bold;
+    padding: 15px;
+}
+
+ul{
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+    list-style: none;
+    margin-right: 50px;
+    padding: 15px;
+}
+
+.ul1 a{
+    color: black;
+}
+
+nav img{
+    width: 50px;
+    height: 50px;
+}
+
+.container h1{
+    padding-top: 110px;
+}
+
+a{
+    text-decoration: none;
+    color: gray;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+.hr{
+    color: white;
+}
+
+.input{
+    padding: 20px;
+}
+.input p{
+    font-size: 20px;
+    text-align:justify;
+}
+
+input{
+    width: 80%;
+    height: 30px;
+}
+
+.create-event{
+    color: black;
+    font-weight: bold;
+}
+
+.create-event:hover{
+    text-decoration: none;
+}
+
+.home{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.selection1,
+.selection2,
+.selection3,
+.selection4{
+    display: flex;
+    gap: 50px;
+    padding: 20px;
+    border-color: grey;
+
+}
+
+.selection1 input,
+.selection2 input,
+.selection3 input,
+.selection4 input{
+    width: 500px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.selection1 select,
+.selection2 select ,
+.selection3 select,
+.selection4 select{
+    width: 500px;
+    border-radius: 10px;
+    background: white;
+    height: 55px;
+}
+
+.selection1 button,
+.selection2 button,
+.selection3 button,
+.selection4 button{
+    width: 200px;
+    border-radius: 1rem;
+    color: white;
+    background-color: red;
+    border-style: none;
+}
+
+button{
+    background-color: rgba(66, 145, 218, 0.858);
+    width: 100%;
+    height: 55px;
+    border-style: none;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+

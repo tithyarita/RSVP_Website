@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Page</title>
+    <link rel="stylesheet" href="../css/edit.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+
+<body>
+    <div data-aos="flip-right" class="container">
+        <a href="./user.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <img src="../image/profile-removebg-preview.png" id="pf-photo" alt="Profile Photo">
+        <label for="input-file">Upload Profile</label>
+        <div class="change-pf">
+            <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file">
+        </div>
+        <div class="div1">
+            <p>First Name: </p><input id="fname2" type="text" autocomplete="off">
+        </div>
+        <hr>
+
+        <div class="div1">
+            <p>Last Name: </p><input id="lname2" type="text" autocomplete="off">
+        </div>
+
+        <hr>
+        <div class="div2">
+            <p>ID: </p><input id="user-id" type="text" autocomplete="off">
+        </div>
+        <hr>
+        <div class="div3">
+            <p>Email: </p><input id="user-email" type="email" autocomplete="off">
+        </div>
+        <hr>
+        <div class="div4">
+            <p>Phone: </p><input id="user-num" type="text" autocomplete="off">
+        </div>
+        <hr>
+        <div class="div5">
+            <p>Address: </p><input id="user-add" type="text" autocomplete="off">
+        </div>
+        <hr>
+
+        <div class="div5">
+            <p>Date: </p><input id="user-date" type="date" autocomplete="off">
+        </div>
+        <div class="save">
+            <button id="btnSave">SAVE</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+      authDomain: "rsvp-website-7541d.firebaseapp.com",
+      projectId: "rsvp-website-7541d",
+      storageBucket: "rsvp-website-7541d.appspot.com",
+      messagingSenderId: "519298669065",
+      appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+      measurementId: "G-MWMKYXF18R"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Image Upload Preview
+    const pfpic = document.getElementById("pf-photo");
+    const inputfile = document.getElementById("input-file");
+
+    inputfile.addEventListener("change", () => {
+      const file = inputfile.files[0];
+      const reader = new FileReader();
+      reader.onload = function () {
+        const base64Image = reader.result;
+        pfpic.src = base64Image;
+        localStorage.setItem("userProfileImage", base64Image);
+      };
+      if (file) reader.readAsDataURL(file);
+    });
+
+    // Save Button
+    const mySaveBtn = document.getElementById("btnSave");
+
+    mySaveBtn.addEventListener("click", async () => {
+      const userFname = document.querySelector("#fname2").value;
+      const userLname = document.querySelector("#lname2").value;
+      const userId = document.querySelector("#user-id").value;
+      const userEmail2 = document.querySelector("#user-email").value;
+      const userNum2 = document.querySelector("#user-num").value;
+      const userAdd = document.querySelector("#user-add").value;
+      const userDate = document.getElementById("user-date").value;
+      const base64Image = localStorage.getItem("userProfileImage");
+
+      const myUserInfo = {
+        userFname,
+        userLname,
+        userId,
+        userEmail2,
+        userNum2,
+        userAdd,
+        userDate,
+        profileImage: base64Image || ""
+      };
+
+      localStorage.setItem("myObj", JSON.stringify(myUserInfo));
+      console.log(myUserInfo);
+
+      try {
+        // Create user in Firebase Auth with a default password
+        const userCredential = await createUserWithEmailAndPassword(auth, userEmail2, "password123");
+        const user = userCredential.user;
+
+        // Save user data to Firestore
+        await setDoc(doc(db, "userInformation", user.uid), myUserInfo);
+
+        //alert("User registered & data saved!");
+        window.location.href = "./user.html";
+
+      } catch (error) {
+        console.error("Error:", error.code, error.message);
+        alert("Error: " + error.message);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
