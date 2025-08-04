@@ -58,15 +58,18 @@
         console.log(fnData);
 
         //image
-
+        
         const myUploadImg = localStorage.getItem("userProfileImage");
         console.log(myUploadImg);
 
-        
         let myProfileImage = document.querySelector("#pf-image");
-        myProfileImage.src = myUploadImg;
-    
 
+        if(myUploadImg){
+             myProfileImage.src = myUploadImg;
+        }
+        else{
+            myProfileImage.src = "../image/profile-removebg-preview.png";
+        }
         
         let fName3 = document.getElementById("fName3");
         fName3.textContent = `First Name: ${fnData.userFname}`;
