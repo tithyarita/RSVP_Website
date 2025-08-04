@@ -30,14 +30,14 @@ ul{
 .user{
     background-color: black;
     width: 30%;
-    height: 600px;
+    height: 700px;
 }
 
 
 .user img{
     width: 200px;
     padding: 10px;
-    margin-left: 130px ;
+    margin-left: 170px ;
     height: 200px;
     border-radius: 20rem;
 }
@@ -56,7 +56,7 @@ ul{
 
 .div1{
     background-color: white;
-    height: 370px;
+    height: 450px;
     padding: 2%;
     margin-left: 20px;
 }
@@ -68,7 +68,7 @@ ul{
 .div2{
     background-color: white;
     margin-left: 20px;
-    height: 125px;
+    height: 128px;
     padding: 2%;
     margin-top: 20px;
 }
@@ -79,7 +79,8 @@ label{
     padding:10px;
     background-color: red;
     color: white;
-    text-align: center;margin-left: 115px;
+    text-align: center;
+    margin-left: 155px;
     cursor: pointer;
     border-radius: 1rem;
     margin-top: 100px;
