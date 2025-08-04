@@ -36,9 +36,10 @@ ul{
 
 .user img{
     width: 200px;
-    padding-top: 10px;
-    padding-left: 130px ;
-    height: 250px;
+    padding: 10px;
+    margin-left: 130px ;
+    height: 200px;
+    border-radius: 20rem;
 }
 
 .user p{

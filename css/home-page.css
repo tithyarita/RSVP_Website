@@ -1,0 +1,76 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(66, 145, 218, 0.858);
+    position: fixed;
+    width: 99%;
+}
+
+.div1{
+    display: flex;
+    gap: 20px;
+    font-weight: bold;
+    padding: 15px;
+}
+
+ul{
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+    list-style: none;
+    margin-right: 50px;
+    padding: 15px;
+}
+
+.ul1 a{
+    color: black;
+}
+
+nav img{
+    width: 50px;
+    height: 50px;
+}
+
+h1{
+    padding-top: 110px;
+}
+
+a{
+    text-decoration: none;
+    color: gray;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+.hr{
+    color: white;
+    
+}
+
+.input p{
+    font-size: 20px;
+    text-align:justify;
+}
+
+input{
+    width: 80%;
+    height: 30px;
+    margin-right:
+}
+
+.create-event{
+    color: black;
+    font-weight: bold;
+}
+
+.create-event:hover{
+    text-decoration: none;
+}
+
+.home{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
