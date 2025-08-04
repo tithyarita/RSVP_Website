@@ -89,6 +89,7 @@
     inputfile.addEventListener("change", () => {
       const file = inputfile.files[0];
       const reader = new FileReader();
+      
       reader.onload = function () {
         const base64Image = reader.result;
         pfpic.src = base64Image;
