@@ -31,12 +31,12 @@
                      <p id="lName3">Lasst Name :</p>
                 </div>
                 
-                <p id="userId2"></p><hr>
-                <p id="userEmail2"></p><hr>
-                <p id="userPhone2"></p><hr>
+                <p id="userId2">ID:</p><hr>
+                <p id="userEmail2">Email:</p><hr>
+                <p id="userPhone2">Phone Number:</p><hr>
             <div style="display: flex; gap: 20rem;">
-                  <p id="userAddress"></p>
-                <p id="userDate2"></p>
+                  <p id="userAddress">Address:</p>
+                <p id="userDate2">Data:</p>
             </div>
                
             </div>
@@ -63,6 +63,8 @@
         console.log(myUploadImg);
 
         let myProfileImage = document.querySelector("#pf-image");
+
+        localStorage.clear(myUploadImg);
 
         if(myUploadImg){
              myProfileImage.src = myUploadImg;
