@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Chart</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<style>
+    .pie-chart {
+        width: 200px;
+        height: 190px;
+        border-radius: 80%;
+        background: conic-gradient(#4ade80 0% 20%,
+                /* Green: 20% */
+                #60a5fa 20% 40%,
+                /* Blue: 20% */
+                #f87171 40% 60%,
+                /* Red: 20% */
+                #fbbf24 60% 80%,
+                /* Yellow: 20% */
+                #a78bfa 70% 100%
+                /* Purple: 20% */
+            );
+        border: 2px solid #ccc;
+        margin: 20px auto;
+        padding: 20px;
+
+    }
+
+    .chart-container {
+        width: 500px;
+        height: 400px;
+        margin: 40px auto;
+        position: relative;
+        border-left: 5px solid purple;
+        border-bottom: 5px solid purple;
+    }
+
+    .y-axis-label {
+        position: absolute;
+        top: -30px;
+        left: 120px;
+        color: purple;
+        font-size: 14px;
+    }
+
+    .bars {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        height: 100%;
+        padding: 0 20px;
+    }
+
+    .bar {
+        width: 50px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .bar.red {
+        height: 75%;
+        background-color: red;
+    }
+
+    .bar.green {
+        height: 30%;
+        background-color: green;
+    }
+
+    .bar.blue {
+        height: 90%;
+        background-color: #00aaff;
+    }
+
+    .bar.yellow {
+        height: 85%;
+        background-color: gold;
+    }
+
+    .bar.orange {
+        height: 70%;
+        background-color: orange;
+    }
+
+    .labels {
+        display: flex;
+        justify-content: space-around;
+        padding: 5px 20px 0;
+        color: purple;
+        font-weight: bold;
+    }
+
+    .labels div {
+        width: 50px;
+        text-align: center;
+    }
+
+    .y-scale {
+        position: absolute;
+        left: -35px;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        color: purple;
+        font-size: 12px;
+    }
+
+    .y-scale div {
+        height: 60px;
+    }
+
+    .chart-wrapper {
+      width: 300px;
+      height: 300px;
+      margin: 40px auto;
+      position: relative;
+    }
+
+    .pie {
+      width: 100%;
+      height: 100%;
+      border-radius: 80%;
+      background: conic-gradient(
+        #4caf50 0% 26%,        /* History - 26% */
+        #2196f3 26% 49%,       /* Mathematics - 23% */
+        #f0447d 49% 68%,       /* Science - 19% */
+        #ffc107 68% 84%,       /* Spanish - 16% */
+        #f44336 84% 100%       /* Literature - 15% */
+      );
+    }
+
+    .label {
+      position: absolute;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      color: black;
+    }
+
+    .label.history {
+      top: 20%;
+      left: 60%;
+    }
+
+    .label.math {
+      top: 60%;
+      left: 55%;
+    }
+
+    .label.science {
+      bottom: 15%;
+      left: 20%;
+      
+    }
+
+    .label.spanish {
+      bottom: 30%;
+      left: 10%;
+      top: 8rem;
+    }
+
+    .label.literature {
+      top: 19%;
+      left: 20%;
+    }
+</style>
+
+<body>
+    <nav>
+        <div class="head">
+            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"></a>
+            <p>Name</p>
+        </div>
+        <ul class="ul1">
+            <a class="home" href="#">
+                <li>Home</li>
+            </a>
+            <a href="#">
+                <li>Setting</li>
+            </a>
+            <a href="#">
+                <li>Sign Out</li>
+            </a>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome, Admin Dashboard</h1>
+        <hr class="hr">
+    </div>
+
+    <ul class="ul2">
+        <a class="create-event" href="#">
+            <li>Create Event</li>
+        </a>
+        <a href="#" style="font-weight: bold; color: black; text-decoration: none;">
+            <li>Event</li>
+        </a>
+        <a href="#">
+            <li>Response Management</li>
+        </a>
+        <a href="#">
+            <li>User & Aceess Control</li>
+        </a>
+    </ul>
+    <hr class="hr">
+
+    <section style="display: flex; justify-content: center;align-items: center;">
+
+
+        <div class="chart-container">
+            <div class="y-axis-label">Scale: 1 Unit = 10 Students</div>
+            <div class="y-scale">
+                <div>60</div>
+                <div>50</div>
+                <div>40</div>
+                <div>30</div>
+                <div>20</div>
+                <div>10</div>
+                <div>0</div>
+            </div>
+
+            <div class="bars">
+                <div class="bar red"></div>
+                <div class="bar green"></div>
+                <div class="bar blue"></div>
+                <div class="bar yellow"></div>
+                <div class="bar orange"></div>
+            </div>
+
+            <div class="labels">
+                <div>Red</div>
+                <div>Green</div>
+                <div>Blue</div>
+                <div>Yellow</div>
+                <div>Orange</div>
+            </div>
+        </div>
+
+        <div class="chart-wrapper">
+            <div class="pie"></div>
+            <div class="label history">History<br>26%</div>
+            <div class="label math">Mathematics<br>23%</div>
+            <div class="label science">Science<br>19%</div>
+            <div class="label spanish">Spanish<br>16%</div>
+            <div class="label literature">Literature<br>15%</div>
+        </div>
+    </section>
+
+
+</body>
+
+</html>
