@@ -135,7 +135,9 @@
                     <h3>${data.name}</h3>
                     <p>Start Date: ${data.startDate}</p>
                     <p>End Date: ${data.endDate}</p>
-                    <button onclick="viewDetail('${docSnap.id}')">View Detail</button>
+                    <a href="detail.html?id=${docSnap.id}">
+                        <button>View Detail</button>
+                    </a>
                 `;
                 eventList.appendChild(div);
                 

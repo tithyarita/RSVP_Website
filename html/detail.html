@@ -10,34 +10,107 @@
     <div id="eventList"></div>
 </body>
 
-<Script>
-const eventList = document.getElementById('eventList');
-        const formPreview = document.getElementById('formPreview');
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-        async function fetchEvents() {
-            const querySnapshot = await getDocs(collection(db, "events"));
-            eventList.innerHTML = '';
+const firebaseConfig = {
+    apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+    authDomain: "rsvp-website-7541d.firebaseapp.com",
+    projectId: "rsvp-website-7541d",
+    storageBucket: "rsvp-website-7541d.appspot.com",
+    messagingSenderId: "519298669065",
+    appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+    measurementId: "G-MWMKYXF18R"
+};
 
-            querySnapshot.forEach(docSnap => {
-                const data = docSnap.data();
-                const div = document.createElement('div');
-                div.className = 'event-card';
-                div.innerHTML = `
-                    <h3>${data.name}</h3>
-                    <p>Start Date: ${data.startDate}</p>
-                    <p>End Date: ${data.endDate}</p>
-                    <button onclick="viewDetail('${docSnap.id}')">View Detail</button>
-                `;
-                eventList.appendChild(div);
-            });
-        }
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-        // Helper: Render field options as array
-        function getOptionsArray(options) {
-            if (Array.isArray(options)) return options;
-            if (typeof options === "string") return options.split(',').map(opt => opt.trim()).filter(Boolean);
-            return [];
-        }
+const formPreview = document.getElementById('formPreview');
 
-</Script>
+// Helper: Render field options as array
+function getOptionsArray(options) {
+    if (Array.isArray(options)) return options;
+    if (typeof options === "string") return options.split(',').map(opt => opt.trim()).filter(Boolean);
+    return [];
+}
+
+// Get event ID from URL
+function getEventIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
+}
+
+async function showEventDetail() {
+    const eventId = getEventIdFromUrl();
+    if (!eventId) {
+        formPreview.innerHTML = "<p>No event selected.</p>";
+        return;
+    }
+    const docRef = doc(db, "events", eventId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const event = docSnap.data();
+        formPreview.innerHTML = `
+            <h2>${event.name}</h2>
+            <hr>
+        `;
+
+        event.fields.forEach(field => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'form-field';
+
+            // Label
+            const label = document.createElement('label');
+            label.textContent = field.label;
+            wrapper.appendChild(label);
+
+            // Field types
+            if (field.type === 'text' || field.type === 'email') {
+                const input = document.createElement('input');
+                input.type = field.type;
+                input.placeholder = `Enter your ${field.label}`;
+                wrapper.appendChild(input);
+            } else if (field.type === 'dropdown') {
+                const select = document.createElement('select');
+                const placeholderOption = document.createElement('option');
+                placeholderOption.textContent = "Please select";
+                placeholderOption.disabled = true;
+                placeholderOption.selected = true;
+                select.appendChild(placeholderOption);
+                getOptionsArray(field.options).forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt;
+                    option.textContent = opt;
+                    select.appendChild(option);
+                });
+                wrapper.appendChild(select);
+            } else if (field.type === 'radio') {
+                const radioGroup = document.createElement('div');
+                radioGroup.className = 'radio-group';
+                getOptionsArray(field.options).forEach(opt => {
+                    const radioLabel = document.createElement('label');
+                    const radio = document.createElement('input');
+                    radio.type = "radio";
+                    radio.name = field.label;
+                    radio.value = opt;
+                    radioLabel.appendChild(radio);
+                    radioLabel.appendChild(document.createTextNode(" " + opt));
+                    radioGroup.appendChild(radioLabel);
+                });
+                wrapper.appendChild(radioGroup);
+            }
+
+            formPreview.appendChild(wrapper);
+        });
+    } else {
+        formPreview.innerHTML = "<p>Event not found.</p>";
+    }
+}
+
+showEventDetail();
+</script>
+
 </html>
