@@ -5,29 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSVP_website</title>
+
+    <link rel="stylesheet" href="../css/index.css">
+
     <link rel="stylesheet" href="../css/style.css">
+
 </head>
-
 <body>
-    <div class="head">
-        <h2>Will You Attend Our Events?</h2>
-        <span>Please let us know wheater or not can make it to our Events.</span>
+  <h2>Will You Attend Our Events?</h2>
+  <p class="p1">Please let us know whether or not can make it to our Events</p>
+  <hr>
+
+  <form id="rsvpForm">
+    <p>Can You Attend?</p>
+    <label><input type="radio" name="attendance" value="can attend" required> Can attend</label>
+    <br>
+    <label><input type="radio" name="attendance" value="can't attend"> Can't attend</label>
+
+    <p>Full Name</p>
+    <input type="text" id="fname" placeholder="First Name" required />
+    <input type="text" id="lname" placeholder="Last Name" required />
+
+    <p>Email</p>
+    <input type="email" id="email" placeholder="example@mail.com" required />
+
+    <p>Phone Number</p>
+    <input type="tel" id="phoneNum" placeholder="+855 XXX XXX" required />
+
+    <p>Choose the Event</p>
+    <select id="event" required>
+      <option value="">Please select</option>
+      <option value="event1">Art Workshop</option>
+      <option value="event2">Fashion Workshop</option>
+      <option value="event3">Technology Workshop</option>
+      <option value="event4">Design Workshop</option>
+    </select>
+
+    <p>Number of Adults</p>
+    <input type="number" id="adults" min="0" max="20" value="0" />
+
+    <p>Number of Children</p>
+    <input type="number" id="children" min="0" max="20" value="0" />
+    
+    <p>Message to the Bride and Groom</p>
+    <div class="div7">
+    <textarea id="message" placeholder="Message here..."></textarea>
+
+    <button type="submit">Submit</button>
     </div>
-    <hr>
 
-    <div class="container">
-        <div class="div1">
-            <p>Can You Attend?</p>
-
+    
+  </form>
             <div id="radioBox">
                 <div class="label1">
                     <input type="radio" id="rad1" name="fav_language" value="can attend">
-                      <label for="html">can attend</label><br>
+                    <label for="html">can attend</label><br>
                 </div>
 
                 <div class="label2">
-                      <input type="radio" id="rad2" name="fav_language" value="can't attend">
-                      <label for="css">can't attend</label>
+                    <input type="radio" id="rad2" name="fav_language" value="can't attend">
+                    <label for="css">can't attend</label>
                 </div>
             </div>
 
@@ -140,6 +177,8 @@
             <input id="submitBtn" type="submit" value="submit">
         </div>
     </div>
+=======
+  <script type="module" src="script.js"></script>
+>>>>>>> 6b6e48eb913d9476bd922b56c83bc9efa7aad13a
 </body>
-<script src="./js/form.js"></script>
 </html>

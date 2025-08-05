@@ -1,0 +1,116 @@
+body{
+    margin: 0;
+}
+
+.head,
+.div1,
+.div2,
+.div3,
+.div4,
+.div5,
+.div6,
+.div7,
+.div8,
+.div9{
+    padding: 1%;
+}
+
+.label2{
+    margin-left: -7.5px;
+}
+
+.input{
+    display:flex;
+    gap: 8%;
+}
+
+.input input{
+    width: 150%;
+    height: 70%;
+}
+
+.div3 input,
+.div9 input{
+    width: 17%;
+    height: 30px;
+}
+
+.div4 select,
+.div5 select,
+.div8 select{
+    width: 17%; height: 35px;
+}
+.div7{
+    align-items: center;
+    text-align: center;
+}
+
+.div7 input{
+    background-color: red;
+    width: 10%;
+    height: 40px;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    
+}
+
+.div6 input{
+    width: 75%; height: 200px;
+}
+
+.div7 input:hover{
+    background-color: rgb(237, 93, 93);
+}
+
+span{
+    color: rgb(148, 141, 141);
+}
+
+@media (max-width: 768px) {
+    .input {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .input input,
+    .div3 input,
+    .div9 input{
+        width: 70%;
+        height: 40px;
+    }
+
+    .label2 {
+        margin-left: -8px; /* Reset margin for better alignment */
+    }
+
+    .div7 input {
+        width: 40%;
+        font-size: 1rem;
+    }
+
+    .head,
+    .div1,
+    .div2,
+    .div3,
+    .div4,
+    .div5,
+    .div6,
+    .div7,
+    .div8,
+    .div9 {
+        padding-left: 5%;
+        padding-top: 3%;
+    }
+
+    .div4 select,
+    .div5 select,
+    .div8 select{
+        width: 72%; height: 40px;
+    }
+
+    .div6 input{
+        width: 80%;
+        height: 150px;
+    }
+}
