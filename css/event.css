@@ -1,0 +1,16 @@
+.div1,
+.div2{
+    border: solid grey 2px;
+    border-radius: 1rem;
+    padding: 5px;
+    height: 200px;
+}
+
+.div1 button,
+.div2 button{
+    border-radius: 2rem;
+    background-color: rgba(66, 145, 218, 0.858);
+    padding: 5px;
+    margin-top: 10px;
+    border-style: none;
+}
