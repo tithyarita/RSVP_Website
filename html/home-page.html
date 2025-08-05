@@ -1,99 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home-Page</title>
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/home-page.css">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .field-row {
+            display: flex;
+            gap: 10px;
+            margin: 5px 0;
+            align-items: center;
+        }
+
+        .field-row input,
+        .field-row select,
+        .field-row button {
+            padding: 6px;
+        }
+
+        .add-btn {
+            background-color: cornflowerblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
     <nav>
         <div class="head">
-            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png"></a>
+            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"></a>
             <p>Name</p>
         </div>
-        
         <ul class="ul1">
-            <a class="home" href="#"><li>Home</li></a>
-            <a href="#"><li>Setting</li></a>
-            <a href="#"><li>Sign Out</li></a>
+            <a class="home" href="#">
+                <li>Home</li>
+            </a>
+            <a href="#">
+                <li>Setting</li>
+            </a>
+            <a href="#">
+                <li>Sign Out</li>
+            </a>
         </ul>
     </nav>
 
     <div class="container">
-        <h1>Welcome, Admin dashboard</h1>
+        <h1>Welcome, Admin Dashboard</h1>
+        <hr class="hr">
     </div>
 
     <ul class="ul2">
-        <a class="create-event" href="#"><li>Create Event</li></a>
-        <a href="#"><li>Event</li></a>
-        <a href="#"><li>Response Management</li></a>
-        <a href="#"><li>User & Aceess Control</li></a>
-    </ul><hr>
+        <a class="create-event" href="#">
+            <li>Create Event</li>
+        </a>
+        <a href="#">
+            <li>Event</li>
+        </a>
+        <a href="#">
+            <li>Response Management</li>
+        </a>
+        <a href="#">
+            <li>User & Access Control</li>
+        </a>
+    </ul>
+    <hr class="hr">
+
     <div class="input">
-        <p>Event Name : <input type="text" placeholder="Enter Name" autocomplete="off"></p><hr>
-        <p>Event (Start Date) : <input type="date" autocomplete="off"></p><hr>
-        <p>Event (End date) : <input type="date"></p><hr>
-    </div>
-    <h1>From Flied</h1>
-    <div class="selection1">
-        <select name="field" id="field" autocomplete="off">
-            <option value="0">please select</option>
-            <option value="1">Text Input</option>
-            <option value="2">Email Input</option>
-            <option value="3">Dropdown List</option>
-            <option value="4">Radio Buttons</option>
-        </select>
-
-        <input type="text" placeholder="Field Label" autocomplete="off">
-        <input type="text" placeholder="Options (comma-seperated)" autocomplete="off">
-        <button>Add Field</button>
+        <p>Event Name: <input id="eventName" type="text" placeholder="Enter Name" autocomplete="off"></p>
+        <hr class="hr">
+        <p>Event (Start Date): <input id="eventStart" type="date" autocomplete="off"></p>
+        <hr class="hr">
+        <p>Event (End Date): <input id="eventEnd" type="date"></p>
+        <hr class="hr">
     </div>
 
-    <div class="selection2">
-        <select name="field" id="field" autocomplete="off">
-            <option value="0">please select</option>
-            <option value="1">Text Input</option>
-            <option value="2">Email Input</option>
-            <option value="3">Dropdown List</option>
-            <option value="4">Radio Buttons</option>
-        </select>
+    <h2>Form Field</h2>
+    <div id="formContainer"></div>
+    <button class="add-btn" id="addFieldBtn">Add Field</button>
+    <br><br>
+    <button id="saveBtn">Save The Event</button>
 
-        <input type="text" placeholder="Field Label" autocomplete="off">
-        <input type="text" placeholder="Options (comma-seperated)" autocomplete="off">
-        <button>Add Field</button>
-    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-    <div class="selection3">
-        <select name="field" id="field" autocomplete="off">
-            <option value="0">please select</option>
-            <option value="1">Text Input</option>
-            <option value="2">Email Input</option>
-            <option value="3">Dropdown List</option>
-            <option value="4">Radio Buttons</option>
-        </select>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+            authDomain: "rsvp-website-7541d.firebaseapp.com",
+            projectId: "rsvp-website-7541d",
+            storageBucket: "rsvp-website-7541d.firebasestorage.app",
+            messagingSenderId: "519298669065",
+            appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+            measurementId: "G-MWMKYXF18R"
+        };
 
-        <input type="text" placeholder="Field Label" autocomplete="off">
-        <input type="text" placeholder="Options (comma-seperated)" autocomplete="off">
-        <button>Add Field</button>
-    </div>
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-    <div class="selection4">
-        <select name="field" id="field" autocomplete="off">
-            <option value="0">Please Select</option>
-            <option value="1">Text Input</option>
-            <option value="2">Email Input</option>
-            <option value="3">Dropdown List</option>
-            <option value="4">Radio Buttons</option>
-        </select>
+        const formContainer = document.getElementById('formContainer');
+        const saveBtn = document.getElementById('saveBtn');
+        const addFieldBtn = document.getElementById('addFieldBtn');
+        let formFields = [];
 
-        <input type="text" placeholder="Field Label" autocomplete="off">
-        <input type="text" placeholder="Options (comma-seperated)" autocomplete="off">
-        <button>Add Field</button>
-    </div>
+        function addFormRow() {
+            const row = document.createElement('div');
+            row.className = 'field-row';
 
-    <button>Save The Event</button>
+            const select = document.createElement('select');
+            select.innerHTML = `
+        <option value="1">Text Input</option>
+        <option value="2">Email Input</option>
+        <option value="3">Dropdown List</option>
+        <option value="4">Radio Buttons</option>
+      `;
 
+            const labelInput = document.createElement('input');
+            labelInput.placeholder = 'Field Label';
+
+            const optionsInput = document.createElement('input');
+            optionsInput.placeholder = 'Options (comma-separated)';
+
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remove';
+            removeBtn.className = 'remove-btn';
+            removeBtn.onclick = () => row.remove();
+
+            row.appendChild(select);
+            row.appendChild(labelInput);
+            row.appendChild(optionsInput);
+            row.appendChild(removeBtn);
+
+            formContainer.appendChild(row);
+        }
+
+        addFieldBtn.addEventListener('click', addFormRow);
+
+        saveBtn.addEventListener('click', async () => {
+            const name = document.getElementById('eventName').value.trim();
+            const startDate = document.getElementById('eventStart').value;
+            const endDate = document.getElementById('eventEnd').value;
+            if (!name || !startDate || !endDate) {
+                return alert("Please fill in all event details.");
+            }
+
+            const allRows = formContainer.querySelectorAll('.field-row');
+            formFields = [];
+            allRows.forEach(row => {
+                const type = row.children[0].value;
+                const label = row.children[1].value.trim();
+                const options = row.children[2].value.trim();
+
+                formFields.push({
+                    type: getFieldTypeName(type),
+                    label,
+                    options
+                });
+            });
+
+            const eventData = {
+                name,
+                startDate,
+                endDate,
+                fields: formFields
+            };
+
+            try {
+                await addDoc(collection(db, "events"), eventData);
+                alert("✅ Event saved successfully to Firebase!");
+                formContainer.innerHTML = '';
+                addFormRow();
+            } catch (error) {
+                console.error("❌ Failed to save event:", error);
+                alert("❌ Failed to save event.");
+            }
+        });
+
+        function getFieldTypeName(value) {
+            return {
+                '1': 'text',
+                '2': 'email',
+                '3': 'dropdown',
+                '4': 'radio'
+            }[value];
+        }
+
+        window.onload = () => {
+            addFormRow();
+        };
+    </script>
 </body>
+
 </html>
