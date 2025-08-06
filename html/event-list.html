@@ -31,7 +31,8 @@
             max-width: 700px;
         }
 
-        #formPreview h2, #formPreview h3 {
+        #formPreview h2,
+        #formPreview h3 {
             margin-top: 0;
         }
 
@@ -71,6 +72,7 @@
             <p>Name</p>
         </div>
         <ul class="ul1">
+<<<<<<< HEAD
             <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;">
                 <li>Home</li>
             </a>
@@ -80,6 +82,11 @@
             <a href="#">
                 <li>Sign Out</li>
             </a>
+=======
+            <a class="home" href="#"><li>Home</li></a>
+            <a href="#"><li>Setting</li></a>
+            <a href="#"><li>Sign Out</li></a>
+>>>>>>> 6fd61af1bd0a640d4eede107ed7c7ecf6e6cc13a
         </ul>
     </nav>
 
@@ -88,20 +95,19 @@
     </div>
 
     <ul class="ul2">
-        <a class="create-event" href="#"><li>Create Event</li></a>
+        <a class="create-event" href="home-page.html"><li>Create Event</li></a>
         <a href="#" style="font-weight: bold; color: black; text-decoration: none;"><li>Event</li></a>
         <a href="#"><li>Response Management</li></a>
         <a href="#"><li>User & Aceess Control</li></a>
     </ul><hr class="hr">
 
-        <h1>All Events</h1>
-        <hr class="hr">
-
-
-    
-
-    <a href="detail.html"><div id="eventList"></div></a>
-    
+    <h2>Upcoming Events</h2>
+    <div id="upcomingEvents"></div>
+    <h2>Processing Events</h2>
+    <div id="processingEvents"></div>
+    <h2>Past Events</h2>
+    <div id="pastEvents"></div>
+    <div id="formPreview"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
@@ -111,7 +117,7 @@
             apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
             authDomain: "rsvp-website-7541d.firebaseapp.com",
             projectId: "rsvp-website-7541d",
-            storageBucket: "rsvp-website-7541d.appspot.com", // fixed typo
+            storageBucket: "rsvp-website-7541d.appspot.com",
             messagingSenderId: "519298669065",
             appId: "1:519298669065:web:1e43e4c598af256c2636d8",
             measurementId: "G-MWMKYXF18R"
@@ -120,12 +126,33 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const eventList = document.getElementById('eventList');
+        const upcomingEvents = document.getElementById('upcomingEvents');
+        const processingEvents = document.getElementById('processingEvents');
+        const pastEvents = document.getElementById('pastEvents');
         const formPreview = document.getElementById('formPreview');
+
+        function getEventStatus(startDateStr, endDateStr) {
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const startDate = new Date(startDateStr);
+            startDate.setHours(0,0,0,0);
+            const endDate = new Date(endDateStr);
+            endDate.setHours(0,0,0,0);
+
+            if (today < startDate) {
+                return 'upcoming';
+            } else if (today >= startDate && today <= endDate) {
+                return 'processing';
+            } else {
+                return 'past';
+            }
+        }
 
         async function fetchEvents() {
             const querySnapshot = await getDocs(collection(db, "events"));
-            eventList.innerHTML = '';
+            upcomingEvents.innerHTML = '';
+            processingEvents.innerHTML = '';
+            pastEvents.innerHTML = '';
 
             querySnapshot.forEach(docSnap => {
                 const data = docSnap.data();
@@ -139,8 +166,14 @@
                         <button>View Detail</button>
                     </a>
                 `;
-                eventList.appendChild(div);
-                
+                const status = getEventStatus(data.startDate, data.endDate);
+                if (status === 'upcoming') {
+                    upcomingEvents.appendChild(div);
+                } else if (status === 'processing') {
+                    processingEvents.appendChild(div);
+                } else {
+                    pastEvents.appendChild(div);
+                }
             });
         }
 
@@ -215,3 +248,4 @@
         fetchEvents();
     </script>
 </body>
+</html>
