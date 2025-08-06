@@ -4,6 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail</title>
+    <style>
+        .form-field { margin-bottom: 1em; font-size: 35px;margin-left: 50px;}
+        .form-field label { display: block; margin-bottom: 0.2em; font-weight: 500; }
+        .form-field input[type="text"],
+        .form-field input[type="email"],
+        .form-field select {
+            width: 320px;
+            height: 50px;
+            padding: 8px;
+            margin-bottom: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+    
+        }
+        .form-field .radio-group label {
+            display: block;
+            margin-left: 1.5em;
+            margin-bottom: 0.3em;
+            font-weight: 400;
+            font-size: 20px;
+
+        }
+        #submitBtn {
+            background: green;
+            color: white;
+            border: none;
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            width: 150px;
+            height: 50px;
+            cursor: pointer;
+            margin-top: 1em;
+            margin-left: 120px;
+        }
+
+        ::placeholder{
+            font-size: 15px;
+        }
+    </style>
 </head>
 <body>
     <div id="formPreview"></div>
@@ -12,7 +52,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
@@ -53,18 +93,20 @@ async function showEventDetail() {
 
     if (docSnap.exists()) {
         const event = docSnap.data();
-        formPreview.innerHTML = `
-            <h2>${event.name}</h2>
-            <hr>
-        `;
+        // Build the form
+        const form = document.createElement('form');
+        form.id = "eventForm";
+        formPreview.innerHTML = `<h1>${event.name}</h1><hr>`;
+        formPreview.appendChild(form);
 
-        event.fields.forEach(field => {
+        event.fields.forEach((field, idx) => {
             const wrapper = document.createElement('div');
             wrapper.className = 'form-field';
 
             // Label
             const label = document.createElement('label');
             label.textContent = field.label;
+            label.htmlFor = `field_${idx}`;
             wrapper.appendChild(label);
 
             // Field types
@@ -72,9 +114,13 @@ async function showEventDetail() {
                 const input = document.createElement('input');
                 input.type = field.type;
                 input.placeholder = `Enter your ${field.label}`;
+                input.id = `field_${idx}`;
+                input.name = field.label;
                 wrapper.appendChild(input);
             } else if (field.type === 'dropdown') {
                 const select = document.createElement('select');
+                select.id = `field_${idx}`;
+                select.name = field.label;
                 const placeholderOption = document.createElement('option');
                 placeholderOption.textContent = "Please select";
                 placeholderOption.disabled = true;
@@ -103,7 +149,44 @@ async function showEventDetail() {
                 wrapper.appendChild(radioGroup);
             }
 
-            formPreview.appendChild(wrapper);
+            form.appendChild(wrapper);
+        });
+
+        // Submit button
+        const submitBtn = document.createElement('button');
+        submitBtn.type = "submit";
+        submitBtn.id = "submitBtn";
+        submitBtn.textContent = "Submit";
+        form.appendChild(submitBtn);
+
+        // Handle form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const responseData = {
+                eventId,
+                submittedAt: new Date().toISOString(),
+                answers: {}
+            };
+            event.fields.forEach((field, idx) => {
+                let value = "";
+                if (field.type === 'text' || field.type === 'email' || field.type === 'dropdown') {
+                    const input = form.querySelector(`[name="${field.label}"]`);
+                    value = input ? input.value : "";
+                } else if (field.type === 'radio') {
+                    const checked = form.querySelector(`input[name="${field.label}"]:checked`);
+                    value = checked ? checked.value : "";
+                }
+                responseData.answers[field.label] = value;
+            });
+
+            try {
+                await addDoc(collection(db, "responses"), responseData);
+                alert("✅ Your response has been submitted!");
+                form.reset();
+            } catch (err) {
+                console.error("Error submitting response:", err);
+                alert("❌ Failed to submit response.");
+            }
         });
     } else {
         formPreview.innerHTML = "<p>Event not found.</p>";
@@ -112,5 +195,4 @@ async function showEventDetail() {
 
 showEventDetail();
 </script>
-
 </html>
