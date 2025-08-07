@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Event</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .form-field { margin-bottom: 1em; }
+        .form-field label { display: block; margin-bottom: 0.5em; }
+        .form-field input, .form-field select { width: 300px; padding: 8px; }
+        .remove-field-btn { color: red; margin-left: 10px; cursor: pointer; }
+        #addFieldBtn { margin-top: 1em; }
+        #saveBtn { margin-top: 2em; }
+    </style>
+</head>
+<body>
+    <h2>Edit Event</h2>
+    <form id="editEventForm"></form>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+            authDomain: "rsvp-website-7541d.firebaseapp.com",
+            projectId: "rsvp-website-7541d",
+            storageBucket: "rsvp-website-7541d.appspot.com",
+            messagingSenderId: "519298669065",
+            appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+            measurementId: "G-MWMKYXF18R"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        function getEventIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        const form = document.getElementById('editEventForm');
+        let fields = [];
+
+        async function loadEvent() {
+            const eventId = getEventIdFromUrl();
+            if (!eventId) return;
+
+            const docRef = doc(db, "events", eventId);
+            const docSnap = await getDoc(docRef);
+            if (!docSnap.exists()) {
+                form.innerHTML = "<p>Event not found.</p>";
+                return;
+            }
+            const event = docSnap.data();
+            fields = event.fields || [];
+
+            form.innerHTML = `
+                <label>Event Name: <input type="text" id="eventName" value="${event.name}"></label>
+                <label>Start Date: <input type="date" id="startDate" value="${event.startDate}"></label>
+                <label>End Date: <input type="date" id="endDate" value="${event.endDate}"></label>
+                <div id="fieldsContainer"></div>
+                <button type="button" id="addFieldBtn">Add Field</button>
+                <br>
+                <button type="submit" id="saveBtn">Save Changes</button>
+            `;
+            renderFields();
+            document.getElementById('addFieldBtn').onclick = addField;
+            form.onsubmit = async (e) => {
+                e.preventDefault();
+                await saveEvent(eventId);
+            };
+        }
+
+        function renderFields() {
+            const container = document.getElementById('fieldsContainer');
+            container.innerHTML = '';
+            fields.forEach((field, idx) => {
+                const fieldDiv = document.createElement('div');
+                fieldDiv.className = 'form-field';
+                fieldDiv.innerHTML = `
+                    <select class="field-type" data-idx="${idx}">
+                        <option value="text" ${field.type === 'text' ? 'selected' : ''}>Text</option>
+                        <option value="email" ${field.type === 'email' ? 'selected' : ''}>Email</option>
+                        <option value="dropdown" ${field.type === 'dropdown' ? 'selected' : ''}>Dropdown</option>
+                        <option value="radio" ${field.type === 'radio' ? 'selected' : ''}>Radio</option>
+                    </select>
+                    <input type="text" class="field-label" data-idx="${idx}" value="${field.label}" placeholder="Label">
+                    <input type="text" class="field-options" data-idx="${idx}" value="${field.options ? field.options.join(', ') : ''}" placeholder="Options (comma-separated)" ${field.type === 'dropdown' || field.type === 'radio' ? '' : 'style="display:none;"'}>
+                    <span class="remove-field-btn" data-idx="${idx}">&#10060;</span>
+                `;
+                container.appendChild(fieldDiv);
+            });
+
+            // Show/hide options input based on type
+            container.querySelectorAll('.field-type').forEach(sel => {
+                sel.onchange = function() {
+                    const idx = this.getAttribute('data-idx');
+                    const optionsInput = container.querySelector(`.field-options[data-idx="${idx}"]`);
+                    if (this.value === 'dropdown' || this.value === 'radio') {
+                        optionsInput.style.display = '';
+                    } else {
+                        optionsInput.style.display = 'none';
+                        optionsInput.value = '';
+                    }
+                    fields[idx].type = this.value;
+                };
+            });
+
+            // Remove field
+            container.querySelectorAll('.remove-field-btn').forEach(btn => {
+                btn.onclick = function() {
+                    const idx = parseInt(this.getAttribute('data-idx'));
+                    fields.splice(idx, 1);
+                    renderFields();
+                };
+            });
+
+            // Update label/options
+            container.querySelectorAll('.field-label').forEach(input => {
+                input.oninput = function() {
+                    const idx = this.getAttribute('data-idx');
+                    fields[idx].label = this.value;
+                };
+            });
+            container.querySelectorAll('.field-options').forEach(input => {
+                input.oninput = function() {
+                    const idx = this.getAttribute('data-idx');
+                    fields[idx].options = this.value.split(',').map(opt => opt.trim()).filter(Boolean);
+                };
+            });
+        }
+
+        function addField() {
+            fields.push({ type: 'text', label: '', options: [] });
+            renderFields();
+        }
+
+        async function saveEvent(eventId) {
+            const name = document.getElementById('eventName').value.trim();
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            await updateDoc(doc(db, "events", eventId), {
+                name,
+                startDate,
+                endDate,
+                fields
+            });
+            alert("Event updated!");
+            window.location.href = "event-list.html";
+        }
+
+        loadEvent();
+    </script>
+</body>
+</html>
