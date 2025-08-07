@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bar Chart</title>
     <link rel="stylesheet" href="../css/style.css" />
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+
+    <!-- Firestore SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
 </head>
 <style>
     .pie-chart {
@@ -117,58 +123,62 @@
     }
 
     .chart-wrapper {
-      width: 300px;
-      height: 300px;
-      margin: 40px auto;
-      position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 40px auto;
+        position: relative;
     }
 
     .pie {
-      width: 100%;
-      height: 100%;
-      border-radius: 80%;
-      background: conic-gradient(
-        #4caf50 0% 26%,        /* History - 26% */
-        #2196f3 26% 49%,       /* Mathematics - 23% */
-        #f0447d 49% 68%,       /* Science - 19% */
-        #ffc107 68% 84%,       /* Spanish - 16% */
-        #f44336 84% 100%       /* Literature - 15% */
-      );
+        width: 100%;
+        height: 100%;
+        border-radius: 80%;
+        background: conic-gradient(#4caf50 0% 26%,
+                /* History - 26% */
+                #2196f3 26% 49%,
+                /* Mathematics - 23% */
+                #f0447d 49% 68%,
+                /* Science - 19% */
+                #ffc107 68% 84%,
+                /* Spanish - 16% */
+                #f44336 84% 100%
+                /* Literature - 15% */
+            );
     }
 
     .label {
-      position: absolute;
-      font-size: 14px;
-      font-weight: bold;
-      text-align: center;
-      color: black;
+        position: absolute;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        color: black;
     }
 
     .label.history {
-      top: 20%;
-      left: 60%;
+        top: 20%;
+        left: 60%;
     }
 
     .label.math {
-      top: 60%;
-      left: 55%;
+        top: 60%;
+        left: 55%;
     }
 
     .label.science {
-      bottom: 15%;
-      left: 20%;
-      
+        bottom: 15%;
+        left: 20%;
+
     }
 
     .label.spanish {
-      bottom: 30%;
-      left: 10%;
-      top: 8rem;
+        bottom: 30%;
+        left: 10%;
+        top: 8rem;
     }
 
     .label.literature {
-      top: 19%;
-      left: 20%;
+        top: 19%;
+        left: 20%;
     }
 </style>
 
@@ -236,11 +246,11 @@
             </div>
 
             <div class="labels">
-                <div>Red</div>
-                <div>Green</div>
-                <div>Blue</div>
-                <div>Yellow</div>
-                <div>Orange</div>
+                <div>5-10 years old</div>
+                <div>10-15 years old</div>
+                <div>15-20 years old</div>
+                <div>20-25 years old</div>
+                <div>25-30 years old</div>
             </div>
         </div>
 
@@ -256,5 +266,51 @@
 
 
 </body>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+    authDomain: "rsvp-website-7541d.firebaseapp.com",
+    projectId: "rsvp-website-7541d",
+    storageBucket: "rsvp-website-7541d.appspot.com",
+    messagingSenderId: "519298669065",
+    appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+    measurementId: "G-MWMKYXF18R"
+  };
+
+  // Initialize Firebase and Firestore
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const bars = document.querySelectorAll(".bar");
+  console.log(bars);
+
+  // Get data from Firestore
+  async function loadChartData() {
+    try {
+      const q = query(collection(db, "responses"), orderBy("ageOrder"));
+      const snapshot = await getDocs(q);
+
+      snapshot.forEach((docSnap, index) => {
+        const data = docSnap.data();
+        const percentHeight = Math.min(data.studentCount * 10, 100); // Scale max to 100%
+
+        if (bars[index]) {
+          bars[index].style.height = `${percentHeight}%`;
+          bars[index].textContent = data.studentCount;
+        }
+      });
+    } catch (err) {
+      console.error("Failed to load Firestore data:", err);
+    }
+  }
+
+  loadChartData();
+</script>
+
+
 
 </html>
