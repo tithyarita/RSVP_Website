@@ -89,11 +89,20 @@
     </div>
 
     <ul class="ul2">
-        <a class="create-event" href="home-page.html"><li>Create Event</li></a>
-        <a href="#" style="font-weight: bold; color: black; text-decoration: none;"><li>Event</li></a>
-        <a href="#"><li>Response Management</li></a>
-        <a href="#"><li>User & Aceess Control</li></a>
-    </ul><hr class="hr">
+        <a class="create-event" href="home-page.html">
+            <li>Create Event</li>
+        </a>
+        <a href="./event-list.html">
+            <li>Event</li>
+        </a>
+        <a href="./respon-manage.html">
+            <li>Response Management</li>
+        </a>
+        <a href="#">
+            <li>User & Access Control</li>
+        </a>
+    </ul>
+    <hr class="hr">
 
     <h2>Upcoming Events</h2>
     <div id="upcomingEvents"></div>
@@ -163,6 +172,7 @@
                         <button class="edit-btn" data-id="${docSnap.id}">Edit</button>
                     </a>
                     <button class="remove-btn" data-id="${docSnap.id}">Remove</button>
+                    
                 `;
                 const status = getEventStatus(data.startDate, data.endDate);
                 if (status === 'upcoming') {
