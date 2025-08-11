@@ -148,10 +148,10 @@
 
     .label {
         position: absolute;
-        font-size: 14px;
+        font-size: 0.8rem;
         font-weight: bold;
         text-align: center;
-        color: black;
+        color: rgb(76, 75, 78);
     }
 
     .label.history {
@@ -263,59 +263,9 @@
             <div class="label literature"><br>25-30 years old</div>
         </div>
     </section>
-
-
+    
 </body>
 <script>
  
-
-  /*
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-
-  // Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
-    authDomain: "rsvp-website-7541d.firebaseapp.com",
-    projectId: "rsvp-website-7541d",
-    storageBucket: "rsvp-website-7541d.appspot.com",
-    messagingSenderId: "519298669065",
-    appId: "1:519298669065:web:1e43e4c598af256c2636d8",
-    measurementId: "G-MWMKYXF18R"
-  };
-
-  // Initialize Firebase and Firestore
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const bars = document.querySelectorAll(".bar");
-  console.log(bars);
-
-  // Get data from Firestore
-  async function loadChartData() {
-    try {
-      const q = query(collection(db, "responses"), orderBy("ageOrder"));
-      const snapshot = await getDocs(q);
-
-      snapshot.forEach((docSnap, index) => {
-        const data = docSnap.data();
-        const percentHeight = Math.min(data.studentCount * 10, 100); // Scale max to 100%
-
-        if (bars[index]) {
-          bars[index].style.height = `${percentHeight}%`;
-          bars[index].textContent = data.studentCount;
-        }
-      });
-    } catch (err) {
-      console.error("Failed to load Firestore data:", err);
-    }
-  }
-
-  loadChartData();
-  */
-
 </script>
-
-
-
 </html>
