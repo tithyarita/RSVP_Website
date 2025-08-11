@@ -89,3 +89,10 @@ label{
 input{
     display: none;
 }
+
+i:hover{
+    background-color: black;
+    color: white;
+    border-radius: 5rem;
+    cursor: pointer;
+}
