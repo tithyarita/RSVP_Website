@@ -5,10 +5,28 @@
     <title>Edit Event</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .form-field { margin-bottom: 2em; margin-top: 2em;}
-        .form-field label { display: block; margin-bottom: 0.5em;}
-        .form-field input, .form-field select { width: 300px; padding: 8px; margin-left: 50px; background-color: white}
-        .remove-field-btn { color: red; margin-left: 10px; cursor: pointer; }
+        .form-field {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 2em;
+            margin-top: 2em;
+        }
+        .form-field label { display: none; }
+        .form-field input, .form-field select {
+            width: 220px;
+            padding: 8px;
+            margin-left: 0;
+            background-color: white;
+        }
+        .remove-field-btn {
+            color: red;
+            font-size: 28px;
+            margin-left: 10px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
         #addFieldBtn { width: 100%; height: 40px; border-style: none; background-color: rgba(66, 145, 218, 0.858); font-size: 30px;}
         #saveBtn { margin-top: 1em; width: 100%; height: 40px; border-style: none; background-color: rgb(22, 213, 22); font-size: 30px;}
     </style>
@@ -52,7 +70,7 @@
                 return;
             }
             const event = docSnap.data();
-            fields = event.fields || [];
+            fields = event.fields ? JSON.parse(JSON.stringify(event.fields)) : [];
 
             form.innerHTML = `
                 <label>Event Name: <input type="text" id="eventName" value="${event.name}"></label>
@@ -86,7 +104,7 @@
                     </select>
                     <input type="text" class="field-label" data-idx="${idx}" value="${field.label}" placeholder="Label">
                     <input type="text" class="field-options" data-idx="${idx}" value="${field.options ? field.options.join(', ') : ''}" placeholder="Options (comma-separated)" ${field.type === 'dropdown' || field.type === 'radio' ? '' : 'style="display:none;"'}>
-                    <span class="remove-field-btn" data-idx="${idx}">&#10060;</span>
+                    <button type="button" class="remove-field-btn" data-idx="${idx}">&#10060;</button>
                 `;
                 container.appendChild(fieldDiv);
             });
@@ -100,7 +118,11 @@
                         optionsInput.style.display = '';
                     } else {
                         optionsInput.style.display = 'none';
-                        optionsInput.value = '';
+                        // Only clear options if switching away from dropdown/radio
+                        if (fields[idx].type === 'dropdown' || fields[idx].type === 'radio') {
+                            optionsInput.value = '';
+                            fields[idx].options = [];
+                        }
                     }
                     fields[idx].type = this.value;
                 };
