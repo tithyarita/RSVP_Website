@@ -34,14 +34,19 @@
             border: none;
             cursor: pointer;
         }
+
+        #userProfile {
+            border-radius: 50%;
+        }
     </style>
 </head>
 
 <body>
     <nav>
         <div class="head">
-            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"></a>
-            <p>Name</p>
+            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"
+                    id="userProfile"></a>
+            <p id="userProfileNmae"></p>
         </div>
         <ul class="ul1">
             <a class="home" href="#">
@@ -108,6 +113,36 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+        
+        const myFinalImg = document.querySelector("#userProfile");
+        console.log(myFinalImg);
+
+        const InforImageFinal = localStorage.getItem("userProfileImage");
+        console.log(InforImageFinal);
+
+       
+        
+
+        if(InforImageFinal){
+              myFinalImg.src = InforImageFinal;
+              
+        }
+
+        else{
+            myFinalImg.src = "../image/profile-removebg-preview.png";
+        }
+
+        const myFinalName = document.querySelector("#userProfileNmae");
+        console.log(myFinalName);
+
+        const InforNameFinal = localStorage.getItem("myObj");
+        const finalData = JSON.parse(InforNameFinal);
+        console.log(finalData);
+
+        if (finalData) {
+            myFinalName.textContent = `${finalData.userFname} ${finalData.userLname}`;
+        }
 
         const formContainer = document.getElementById('formContainer');
         const saveBtn = document.getElementById('saveBtn');

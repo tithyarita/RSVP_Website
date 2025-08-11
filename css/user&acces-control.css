@@ -1,15 +1,22 @@
-table{
+table {
   border-collapse: collapse;
 }
 
-table,th,td{
-  border:1px solid black;
+table,
+th,
+td {
+  border: 1px solid black;
 }
 
-th, td{
+th,
+td {
   width: 25%;
 }
 
-td{
+td {
   height: 70px;
+}
+
+#userProfile {
+  border-radius: 50%;
 }

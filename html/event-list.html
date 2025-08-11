@@ -62,6 +62,9 @@
             margin-bottom: 0.3em;
             font-weight: 400;
         }
+        #userProfile{
+            border-radius: 50%;
+        }
     </style>
 </head>
 
@@ -70,7 +73,7 @@
         <div class="head">
             <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"
                     id="userProfile"></a>
-            <p id="userProfileNmae">Name</p>
+            <p id="userProfileNmae"></p>
         </div>
         <ul class="ul1">
             <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;">
@@ -144,9 +147,11 @@
 
         const InforImageFinal = localStorage.getItem("userProfileImage");
         console.log(InforImageFinal);
+        
 
         if(InforImageFinal){
               myFinalImg.src = InforImageFinal;
+              
         }
 
         else{
@@ -161,7 +166,7 @@
         console.log(finalData);
 
         if (finalData) {
-            myFinalName.textContent = `Name: ${finalData.userFname} ${finalData.userLname}`;
+            myFinalName.textContent = `${finalData.userFname} ${finalData.userLname}`;
         }
 
 

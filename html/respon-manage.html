@@ -180,13 +180,18 @@
         top: 19%;
         left: 20%;
     }
+
+    #userProfile {
+        border-radius: 50%;
+    }
 </style>
 
 <body>
     <nav>
         <div class="head">
-            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"></a>
-            <p>Name</p>
+            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"
+                    id="userProfile"></a>
+            <p id="userProfileNmae"></p>
         </div>
         <ul class="ul1">
             <a class="home" href="#">
@@ -263,9 +268,38 @@
             <div class="label literature"><br>25-30 years old</div>
         </div>
     </section>
-    
+
 </body>
 <script>
- 
+     
+     //name and image from local
+
+        const myFinalImg = document.querySelector("#userProfile");
+        console.log(myFinalImg);
+
+        const InforImageFinal = localStorage.getItem("userProfileImage");
+        console.log(InforImageFinal);
+        
+
+        if(InforImageFinal){
+              myFinalImg.src = InforImageFinal;
+              
+        }
+
+        else{
+            myFinalImg.src = "../image/profile-removebg-preview.png";
+        }
+
+        const myFinalName = document.querySelector("#userProfileNmae");
+        console.log(myFinalName);
+
+        const InforNameFinal = localStorage.getItem("myObj");
+        const finalData = JSON.parse(InforNameFinal);
+        console.log(finalData);
+
+        if (finalData) {
+            myFinalName.textContent = `${finalData.userFname} ${finalData.userLname}`;
+        }
 </script>
+
 </html>
