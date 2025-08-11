@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Edit Event</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .form-field { margin-bottom: 2em; margin-top: 2em;}
         .form-field label { display: block; margin-bottom: 0.5em;}
@@ -11,9 +12,16 @@
         .remove-field-btn { color: red; margin-left: 10px; cursor: pointer; }
         #addFieldBtn { width: 100%; height: 40px; border-style: none; background-color: rgba(66, 145, 218, 0.858); font-size: 30px;}
         #saveBtn { margin-top: 1em; width: 100%; height: 40px; border-style: none; background-color: rgb(22, 213, 22); font-size: 30px;}
+        i:hover{
+            background-color: black;
+            color: white;
+            border-radius: 5rem;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <a href="event-list.html"><i style="font-size: 30px; padding: 15px;" class="fa-solid fa-arrow-left"></i></a>
     <h2 style="font-size: 40px;">Edit Event</h2>
     <form id="editEventForm"></form>
     <script type="module">

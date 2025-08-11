@@ -1,3 +1,15 @@
-table, th, td {
+table{
+  border-collapse: collapse;
+}
+
+table,th,td{
   border:1px solid black;
+}
+
+th, td{
+  width: 25%;
+}
+
+td{
+  height: 70px;
 }
