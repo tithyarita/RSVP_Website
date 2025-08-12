@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Responses for Event</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    body{
+    margin: 0;
+    padding: 30px;
+    bottom: 20px;
+}
+.p1{
+    color: gray;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(66, 145, 218, 0.858);
+    position: fixed;
+    width: 100%;
+    margin-top: -30px;
+    margin-left: -30px;
+}
+
+.head{
+    display: flex;
+    gap: 20px;
+    font-weight: bold;
+    padding: 15px;
+}
+
+ul{
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+    list-style: none;
+    margin-right: 50px;
+    padding: 15px;
+}
+
+.ul1 a{
+    color: black;
+}
+
+nav img{
+    width: 50px;
+    height: 50px;
+}
+
+
+.container h1{
+    padding-top: 110px;
+}
+
+a{
+    text-decoration: none;
+    color: gray;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+hr{
+    color: white;
+}
+
+.ul2{
+    font-size: 25px;
+    margin: 0;
+}
+    h1 {
+      margin-bottom: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+      font-size: 16px;
+    }
+    th {
+      background: #f0f0f0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+     <nav>
+        <div class="head">
+            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png"></a>
+            <p>Name</p>
+        </div>
+        
+        <ul class="ul1">
+            <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;"><li>Home</li></a>
+            <a href="#"><li>Setting</li></a>
+            <a href="#"><li>Sign Out</li></a>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome, Admin Dashboard</h1><hr class="hr">
+    </div>
+
+    <ul class="ul2">
+        <a class="create-event" href="home-page.html"><li>Create Event</li></a>
+        <a href="event-list.html" style="font-weight: bold; color: black; text-decoration: none;"><li>Event</li></a>
+        <a href="all-event-responses.html"><li>Event management</li></a>
+    </ul><hr class="hr">
+
+  <h1 id="response-count">Responses</h1>
+
+  <table id="response-table">
+    <tr>
+      <th>Email</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Join Since</th>
+    </tr>
+  </table>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+      authDomain: "rsvp-website-7541d.firebaseapp.com",
+      projectId: "rsvp-website-7541d",
+      storageBucket: "rsvp-website-7541d.appspot.com",
+      messagingSenderId: "519298669065",
+      appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+      measurementId: "G-MWMKYXF18R"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let responses = [];
+
+    // Helper: get event id from URL param
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    async function loadData() {
+      // Load all responses
+      const responseSnap = await getDocs(collection(db, "responses"));
+      responses = [];
+      responseSnap.forEach(doc => {
+        responses.push(doc.data());
+      });
+
+      renderTable();
+    }
+
+    function renderTable() {
+      const table = document.getElementById('response-table');
+      while (table.rows.length > 1) table.deleteRow(1);
+
+      const eventId = getQueryParam('id');
+
+      // Filter responses by eventId from URL param (or show all if none)
+      const filteredResponses = eventId
+          ? responses.filter(r => r.eventId === eventId)
+          : responses;
+
+      filteredResponses.forEach(resp => {
+        const row = table.insertRow();
+        const email = resp.answers?.["Email"] || '';
+        const firstName = resp.answers?.["First Name"] || '';
+        const lastName = resp.answers?.["Last Name"] || '';
+        let joinSince = '';
+        if (resp.submittedAt) {
+          try {
+            joinSince = new Date(resp.submittedAt).toLocaleDateString();
+          } catch {}
+        }
+        row.insertCell().textContent = email;
+        row.insertCell().textContent = firstName;
+        row.insertCell().textContent = lastName;
+        row.insertCell().textContent = joinSince;
+      });
+
+      document.getElementById('response-count').textContent = `${filteredResponses.length} Responses`;
+    }
+
+    loadData();
+  </script>
+</body>
+</html>

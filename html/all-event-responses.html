@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User & Access Control</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/user&acces-control.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 50px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+            font-size: 18px;
+        }
+        th {
+            background: #f5f5f5;
+            font-size: 22px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="head">
+            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"></a>
+            <p>Name</p>
+        </div>
+        <ul class="ul1">
+            <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;">
+                <li>Home</li>
+            </a>
+            <a href="#"><li>Setting</li></a>
+            <a href="#"><li>Sign Out</li></a>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1 id="response-count">Responses</h1>
+        <hr class="hr">
+    </div>
+
+    <ul class="ul2">
+        <a class="create-event" href="home-page.html"><li>Create Event</li></a>
+        <a href="event-list.html"><li>Event</li></a>
+        <a href="responses.html"><li>Response Management</li></a>
+    </ul>
+    <hr class="hr">
+
+    <h1>Event User Counts</h1>
+    <table id="event-count-table">
+        <tr>
+            <th>Event Name</th>
+            <th>User Joined</th>
+        </tr>
+    </table>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+            authDomain: "rsvp-website-7541d.firebaseapp.com",
+            projectId: "rsvp-website-7541d",
+            storageBucket: "rsvp-website-7541d.appspot.com",
+            messagingSenderId: "519298669065",
+            appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+            measurementId: "G-MWMKYXF18R"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function showEventCounts() {
+            // Fetch events
+            const eventSnap = await getDocs(collection(db, "events"));
+            const events = [];
+            eventSnap.forEach(doc => {
+                events.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Fetch responses
+            const responseSnap = await getDocs(collection(db, "responses"));
+            const responses = [];
+            responseSnap.forEach(doc => {
+                responses.push(doc.data());
+            });
+
+            // Update total count
+            document.getElementById('response-count').textContent = `${responses.length} Responses`;
+
+            // Count users per event
+            const eventCounts = {};
+            responses.forEach(resp => {
+                if (resp.eventId) {
+                    eventCounts[resp.eventId] = (eventCounts[resp.eventId] || 0) + 1;
+                }
+            });
+
+            // Fill event count table
+            const eventTable = document.getElementById('event-count-table');
+            while (eventTable.rows.length > 1) eventTable.deleteRow(1);
+            events.forEach(ev => {
+                const row = eventTable.insertRow();
+                row.insertCell().textContent = ev.name || ev.id;
+                row.insertCell().textContent = eventCounts[ev.id] || 0;
+            });
+        }
+
+        showEventCounts();
+    </script>
+</body>
+</html>
