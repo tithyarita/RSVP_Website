@@ -86,8 +86,9 @@
 <body>
     <nav>
         <div class="head">
-            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"></a>
-            <p>Name</p>
+            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"
+                    id="userProfile"></a>
+            <p id="userProfileNmae"></p>
         </div>
         <ul class="ul1">
             <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;">
@@ -103,7 +104,8 @@
     </nav>
 
     <div class="container">
-        <h1>Welcome, Admin Dashboard</h1><hr class="hr">
+        <h1>Welcome, Admin Dashboard</h1>
+        <hr class="hr">
     </div>
 
     <ul class="ul2">
@@ -134,7 +136,252 @@
     <div id="pastEvents"></div>
     <div id="formPreview"></div>
 
-    <script type="module" src="/js/event-list.js">
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+            authDomain: "rsvp-website-7541d.firebaseapp.com",
+            projectId: "rsvp-website-7541d",
+            storageBucket: "rsvp-website-7541d.appspot.com",
+            messagingSenderId: "519298669065",
+            appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+            measurementId: "G-MWMKYXF18R"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const upcomingEvents = document.getElementById('upcomingEvents');
+        const processingEvents = document.getElementById('processingEvents');
+        const pastEvents = document.getElementById('pastEvents');
+        const formPreview = document.getElementById('formPreview');
+
+        //name and image from local
+
+        const myFinalImg = document.querySelector("#userProfile");
+        console.log(myFinalImg);
+
+        const InforImageFinal = localStorage.getItem("userProfileImage");
+        console.log(InforImageFinal);
+        
+
+        if(InforImageFinal){
+              myFinalImg.src = InforImageFinal;
+              
+        }
+
+        else{
+            myFinalImg.src = "../image/profile-removebg-preview.png";
+        }
+
+        const myFinalName = document.querySelector("#userProfileNmae");
+        console.log(myFinalName);
+
+        const InforNameFinal = localStorage.getItem("myObj");
+        const finalData = JSON.parse(InforNameFinal);
+        console.log(finalData);
+
+        if (finalData) {
+            myFinalName.textContent = `${finalData.userFname} ${finalData.userLname}`;
+        }
+
+
+
+
+        function getEventStatus(startDateStr, endDateStr) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const startDate = new Date(startDateStr);
+            startDate.setHours(0, 0, 0, 0);
+            const endDate = new Date(endDateStr);
+            endDate.setHours(0, 0, 0, 0);
+
+            if (today < startDate) {
+                return 'upcoming';
+            } else if (today >= startDate && today <= endDate) {
+                return 'processing';
+            } else {
+                return 'past';
+            }
+        }
+
+        async function fetchEvents() {
+            const querySnapshot = await getDocs(collection(db, "events"));
+            upcomingEvents.innerHTML = '';
+            processingEvents.innerHTML = '';
+            pastEvents.innerHTML = '';
+
+            querySnapshot.forEach(docSnap => {
+                const data = docSnap.data();
+                const div = document.createElement('div');
+                div.className = 'event-card';
+                div.innerHTML = `
+                    <h3>${data.name}</h3>
+                    <p>Start Date: ${data.startDate}</p>
+                    <p>End Date: ${data.endDate}</p>
+                    <a href="detail.html?id=${docSnap.id}">
+                        <button>View Detail</button>
+                    </a>
+                    <a href="edit-event.html?id=${docSnap.id}">
+                        <button class="edit-btn" data-id="${docSnap.id}">Edit</button>
+                    </a>
+                    <button class="remove-btn" data-id="${docSnap.id}">Remove</button>
+                    
+                    
+                `;
+                const status = getEventStatus(data.startDate, data.endDate);
+                if (status === 'upcoming') {
+                    upcomingEvents.appendChild(div);
+                } else if (status === 'processing') {
+                    processingEvents.appendChild(div);
+                } else {
+                    pastEvents.appendChild(div);
+                }
+            });
+        }
+
+        // Helper: Render field options as array
+        function getOptionsArray(options) {
+            if (Array.isArray(options)) return options;
+            if (typeof options === "string") return options.split(',').map(opt => opt.trim()).filter(Boolean);
+            return [];
+        }
+
+        window.viewDetail = async function (id) {
+            const docRef = doc(db, "events", id);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const event = docSnap.data();
+                formPreview.innerHTML = `
+                    <h2>${event.name}</h2>
+                    <hr>
+                `;
+
+                event.fields.forEach(field => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'form-field';
+
+                    // Label
+                    const label = document.createElement('label');
+                    label.textContent = field.label;
+                    wrapper.appendChild(label);
+
+                    // Field types
+                    if (field.type === 'text' || field.type === 'email') {
+                        const input = document.createElement('input');
+                        input.type = field.type;
+                        input.placeholder = `Enter your ${field.label}`;
+                        wrapper.appendChild(input);
+                    } else if (field.type === 'dropdown') {
+                        const select = document.createElement('select');
+                        const placeholderOption = document.createElement('option');
+                        placeholderOption.textContent = "Please select";
+                        placeholderOption.disabled = true;
+                        placeholderOption.selected = true;
+                        select.appendChild(placeholderOption);
+                        getOptionsArray(field.options).forEach(opt => {
+                            const option = document.createElement('option');
+                            option.value = opt;
+                            option.textContent = opt;
+                            select.appendChild(option);
+                        });
+                        wrapper.appendChild(select);
+                    } else if (field.type === 'radio') {
+                        const radioGroup = document.createElement('div');
+                        radioGroup.className = 'radio-group';
+                        getOptionsArray(field.options).forEach(opt => {
+                            const radioLabel = document.createElement('label');
+                            const radio = document.createElement('input');
+                            radio.type = "radio";
+                            radio.name = field.label;
+                            radio.value = opt;
+                            radioLabel.appendChild(radio);
+                            radioLabel.appendChild(document.createTextNode(" " + opt));
+                            radioGroup.appendChild(radioLabel);
+                        });
+                        wrapper.appendChild(radioGroup);
+                    }
+
+                    formPreview.appendChild(wrapper);
+                });
+            }
+        }
+
+        document.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('remove-btn')) {
+                const eventId = e.target.getAttribute('data-id');
+                if (confirm("Are you sure you want to delete this event?")) {
+                    await deleteEvent(eventId);
+                    fetchEvents();
+                }
+            } else if (e.target.classList.contains('edit-btn')) {
+                const eventId = e.target.getAttribute('data-id');
+                const docRef = doc(db, "events", eventId);
+                const docSnap = await getDoc(docRef);
+                if (!docSnap.exists()) return alert("Event not found!");
+
+                const event = docSnap.data();
+                // Edit event name, start date, end date
+                const newName = prompt("Edit event name:", event.name);
+                const newStart = prompt("Edit start date (YYYY-MM-DD):", event.startDate);
+                const newEnd = prompt("Edit end date (YYYY-MM-DD):", event.endDate);
+
+                // Edit existing form fields
+                let newFields = [];
+                for (let i = 0; i < event.fields.length; i++) {
+                    const field = event.fields[i];
+                    const newLabel = prompt(`Edit label for field ${i + 1} (${field.type}):`, field.label);
+                    let newOptions = field.options;
+                    if (field.type === 'dropdown' || field.type === 'radio') {
+                        newOptions = prompt(`Edit options for field ${i + 1} (comma-separated):`, Array.isArray(field.options) ? field.options.join(', ') : field.options);
+                        newOptions = newOptions.split(',').map(opt => opt.trim()).filter(Boolean);
+                    }
+                    newFields.push({
+                        type: field.type,
+                        label: newLabel,
+                        options: (field.type === 'dropdown' || field.type === 'radio') ? newOptions : []
+                    });
+                }
+
+                // Add more fields
+                let addMore = confirm("Do you want to add more fields?");
+                while (addMore) {
+                    const type = prompt("Field type? (text, email, dropdown, radio)");
+                    if (!type || !["text", "email", "dropdown", "radio"].includes(type)) break;
+                    const label = prompt("Field label?");
+                    let options = [];
+                    if (type === "dropdown" || type === "radio") {
+                        const opts = prompt("Options (comma-separated)?");
+                        options = opts ? opts.split(',').map(opt => opt.trim()).filter(Boolean) : [];
+                    }
+                    newFields.push({ type, label, options });
+                    addMore = confirm("Add another field?");
+                }
+
+                if (newName && newStart && newEnd && newFields.length > 0) {
+                    await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js")
+                        .then(({ updateDoc }) => updateDoc(docRef, {
+                            name: newName,
+                            startDate: newStart,
+                            endDate: newEnd,
+                            fields: newFields
+                        }));
+                    fetchEvents();
+                }
+            }
+        });
+
+        async function deleteEvent(eventId) {
+            await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js")
+                .then(({ deleteDoc, doc }) => deleteDoc(doc(db, "events", eventId)));
+        }
+
+        fetchEvents();
     </script>
 </body>
+
 </html>
