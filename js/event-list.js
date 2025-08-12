@@ -36,7 +36,7 @@ import { app, db, collection, getDocs, getDoc, doc } from './db.js';
                     <h3>${data.name}</h3>
                     <p>Start Date: ${data.startDate}</p>
                     <p>End Date: ${data.endDate}</p>
-                    <a href="detail.html?id=${data.id}">
+                    <a href="responses.html?id=${data.id}">
                         <button>View Detail</button>
                     </a>
                     <a href="edit-event.html?id=${data.id}">
