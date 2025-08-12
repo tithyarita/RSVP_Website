@@ -1,211 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Event List</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <style>
-        .event-card {
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-        }
-
-        .event-card button {
-            background-color: green;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #formPreview {
-            background: #fafafa;
-            border-radius: 8px;
-            padding: 2em;
-            margin-top: 2em;
-            max-width: 700px;
-        }
-
-        #formPreview h2,
-        #formPreview h3 {
-            margin-top: 0;
-        }
-
-        .form-field {
-            margin-bottom: 1.5em;
-        }
-
-        .form-field label {
-            display: block;
-            margin-bottom: 0.5em;
-            font-weight: 500;
-        }
-
-        .form-field input[type="text"],
-        .form-field input[type="email"],
-        .form-field select {
-            width: 320px;
-            padding: 8px;
-            margin-bottom: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .form-field .radio-group label {
-            display: block;
-            margin-left: 1.5em;
-            margin-bottom: 0.3em;
-            font-weight: 400;
-        }
-<<<<<<< HEAD
-        #userProfile{
-            border-radius: 50%;
-=======
-
-        .event-count-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1em;
-            gap: 40px;
-        }
-
-        .event-count-row h2 {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin: 0;
-        }
-        .event{
-            color: black;
-            
->>>>>>> 0c3b773bfd28832b74184e208bc4902563a4f711
-        }
-    </style>
-</head>
-
-<body>
-    <nav>
-        <div class="head">
-            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"
-                    id="userProfile"></a>
-            <p id="userProfileNmae"></p>
-        </div>
-        <ul class="ul1">
-            <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;">
-                <li>Home</li>
-            </a>
-            <a href="#">
-                <li>Setting</li>
-            </a>
-            <a href="#">
-                <li>Sign Out</li>
-            </a>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <h1>Welcome, Admin Dashboard</h1>
-        <hr class="hr">
-    </div>
-
-    <ul class="ul2">
-        <a class="create-event" href="home-page.html">
-            <li>Create Event</li>
-        </a>
-        <a href="./event-list.html" class="event" style="font-weight: bold; color: black; text-decoration: none;">
-            <li>Event</li>
-        </a>
-        <a href="./respon-manage.html">
-            <li>Response Management</li>
-        </a>
-        <a href="user&acces-control.html">
-            <li>User & Access Control</li>
-        </a>
-    </ul>
-    <hr class="hr">
-    
-    <div class="event-count-row">
-        <h1 id="all-event-count">All Event: </h1>
-        <h1 id="today-event-count">Today Event: </h1>
-        <h1 id="tomorrow-event-count">Tomorrow Event: </h1>
-    </div>
-    <div id="all-event"></div>
-    <h2>Upcoming Events</h2>
-    <div id="upcomingEvents"></div>
-    <h2>Processing Events</h2>
-    <div id="processingEvents"></div>
-    <h2>Past Events</h2>
-    <div id="pastEvents"></div>
-    <div id="formPreview"></div>
-
-<<<<<<< HEAD
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
-            authDomain: "rsvp-website-7541d.firebaseapp.com",
-            projectId: "rsvp-website-7541d",
-            storageBucket: "rsvp-website-7541d.appspot.com",
-            messagingSenderId: "519298669065",
-            appId: "1:519298669065:web:1e43e4c598af256c2636d8",
-            measurementId: "G-MWMKYXF18R"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+import { app, db, collection, getDocs, getDoc, doc } from './db.js';
 
         const upcomingEvents = document.getElementById('upcomingEvents');
         const processingEvents = document.getElementById('processingEvents');
         const pastEvents = document.getElementById('pastEvents');
         const formPreview = document.getElementById('formPreview');
 
-        //name and image from local
-
-        const myFinalImg = document.querySelector("#userProfile");
-        console.log(myFinalImg);
-
-        const InforImageFinal = localStorage.getItem("userProfileImage");
-        console.log(InforImageFinal);
-        
-
-        if(InforImageFinal){
-              myFinalImg.src = InforImageFinal;
-              
-        }
-
-        else{
-            myFinalImg.src = "../image/profile-removebg-preview.png";
-        }
-
-        const myFinalName = document.querySelector("#userProfileNmae");
-        console.log(myFinalName);
-
-        const InforNameFinal = localStorage.getItem("myObj");
-        const finalData = JSON.parse(InforNameFinal);
-        console.log(finalData);
-
-        if (finalData) {
-            myFinalName.textContent = `${finalData.userFname} ${finalData.userLname}`;
-        }
-
-
-
-
         function getEventStatus(startDateStr, endDateStr) {
             const today = new Date();
-            today.setHours(0, 0, 0, 0);
+            today.setHours(0,0,0,0);
             const startDate = new Date(startDateStr);
-            startDate.setHours(0, 0, 0, 0);
+            startDate.setHours(0,0,0,0);
             const endDate = new Date(endDateStr);
-            endDate.setHours(0, 0, 0, 0);
+            endDate.setHours(0,0,0,0);
 
             if (today < startDate) {
                 return 'upcoming';
@@ -216,29 +22,27 @@
             }
         }
 
-        async function fetchEvents() {
-            const querySnapshot = await getDocs(collection(db, "events"));
+        // Show events from localStorage instantly
+        function showEventsFromLocalStorage() {
             upcomingEvents.innerHTML = '';
             processingEvents.innerHTML = '';
             pastEvents.innerHTML = '';
 
-            querySnapshot.forEach(docSnap => {
-                const data = docSnap.data();
+            const allEvents = JSON.parse(localStorage.getItem('allEvents') || '[]');
+            allEvents.forEach(data => {
                 const div = document.createElement('div');
                 div.className = 'event-card';
                 div.innerHTML = `
                     <h3>${data.name}</h3>
                     <p>Start Date: ${data.startDate}</p>
                     <p>End Date: ${data.endDate}</p>
-                    <a href="detail.html?id=${docSnap.id}">
+                    <a href="detail.html?id=${data.id}">
                         <button>View Detail</button>
                     </a>
-                    <a href="edit-event.html?id=${docSnap.id}">
-                        <button class="edit-btn" data-id="${docSnap.id}">Edit</button>
+                    <a href="edit-event.html?id=${data.id}">
+                        <button class="edit-btn" data-id="${data.id}">Edit</button>
                     </a>
-                    <button class="remove-btn" data-id="${docSnap.id}">Remove</button>
-                    
-                    
+                    <button class="remove-btn" data-id="${data.id}">Remove</button>
                 `;
                 const status = getEventStatus(data.startDate, data.endDate);
                 if (status === 'upcoming') {
@@ -251,13 +55,53 @@
             });
         }
 
-        // Helper: Render field options as array
-        function getOptionsArray(options) {
-            if (Array.isArray(options)) return options;
-            if (typeof options === "string") return options.split(',').map(opt => opt.trim()).filter(Boolean);
-            return [];
+        // Count events for all, today, and tomorrow
+        function countEvents() {
+            const allEvents = JSON.parse(localStorage.getItem('allEvents') || '[]');
+            let allCount = allEvents.length;
+            let todayCount = 0;
+            let tomorrowCount = 0;
+
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+
+            allEvents.forEach(event => {
+                const startDate = new Date(event.startDate);
+                startDate.setHours(0,0,0,0);
+                if (startDate.getTime() === today.getTime()) {
+                    todayCount++;
+                }
+                if (startDate.getTime() === tomorrow.getTime()) {
+                    tomorrowCount++;
+                }
+            });
+
+            document.getElementById('all-event-count').textContent = `All Event: ${allCount || 0}`;
+            document.getElementById('today-event-count').textContent = `Today Event: ${todayCount || 0}`;
+            document.getElementById('tomorrow-event-count').textContent = `Tomorrow Event: ${tomorrowCount || 0}`;
         }
 
+        // Fetch events from Firebase and update localStorage and UI
+        async function fetchEvents() {
+            const querySnapshot = await getDocs(collection(db, "events"));
+            const allEvents = [];
+            querySnapshot.forEach(docSnap => {
+                const data = docSnap.data();
+                allEvents.push({ id: docSnap.id, ...data });
+            });
+            localStorage.setItem('allEvents', JSON.stringify(allEvents));
+            showEventsFromLocalStorage();
+            countEvents();
+        }
+
+        // Show instantly from cache, then update from Firebase in background
+        showEventsFromLocalStorage();
+        countEvents();
+        fetchEvents();
+
+        // Event detail preview logic (unchanged)
         window.viewDetail = async function (id) {
             const docRef = doc(db, "events", id);
             const docSnap = await getDoc(docRef);
@@ -291,7 +135,7 @@
                         placeholderOption.disabled = true;
                         placeholderOption.selected = true;
                         select.appendChild(placeholderOption);
-                        getOptionsArray(field.options).forEach(opt => {
+                        (Array.isArray(field.options) ? field.options : String(field.options).split(',').map(opt => opt.trim()).filter(Boolean)).forEach(opt => {
                             const option = document.createElement('option');
                             option.value = opt;
                             option.textContent = opt;
@@ -301,7 +145,7 @@
                     } else if (field.type === 'radio') {
                         const radioGroup = document.createElement('div');
                         radioGroup.className = 'radio-group';
-                        getOptionsArray(field.options).forEach(opt => {
+                        (Array.isArray(field.options) ? field.options : String(field.options).split(',').map(opt => opt.trim()).filter(Boolean)).forEach(opt => {
                             const radioLabel = document.createElement('label');
                             const radio = document.createElement('input');
                             radio.type = "radio";
@@ -319,11 +163,13 @@
             }
         }
 
+        // Remove and edit logic (unchanged, but call fetchEvents after update/delete)
         document.addEventListener('click', async (e) => {
             if (e.target.classList.contains('remove-btn')) {
                 const eventId = e.target.getAttribute('data-id');
                 if (confirm("Are you sure you want to delete this event?")) {
-                    await deleteEvent(eventId);
+                    await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js")
+                        .then(({ deleteDoc, doc }) => deleteDoc(doc(db, "events", eventId)));
                     fetchEvents();
                 }
             } else if (e.target.classList.contains('edit-btn')) {
@@ -382,17 +228,3 @@
                 }
             }
         });
-
-        async function deleteEvent(eventId) {
-            await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js")
-                .then(({ deleteDoc, doc }) => deleteDoc(doc(db, "events", eventId)));
-        }
-
-        fetchEvents();
-=======
-    <script type="module" src="/js/event-list.js">
->>>>>>> 0c3b773bfd28832b74184e208bc4902563a4f711
-    </script>
-</body>
-
-</html>

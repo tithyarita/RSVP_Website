@@ -84,9 +84,9 @@
 
     <div class="input">
         <p>Event Name: <input id="eventName" type="text" placeholder="Enter Name" autocomplete="off"></p>
-        <hr class="hr">
+        
         <p>Event (Start Date): <input id="eventStart" type="date" autocomplete="off"></p>
-        <hr class="hr">
+        
         <p>Event (End Date): <input id="eventEnd" type="date" autocomplete="off"></p>
         <hr class="hr">
     </div>
@@ -97,10 +97,9 @@
     <br><br>
     <button id="saveBtn">Save The Event</button>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    <script type="module" src="/js/create-list.js">
 
+<<<<<<< HEAD
         const firebaseConfig = {
             apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
             authDomain: "rsvp-website-7541d.firebaseapp.com",
@@ -234,6 +233,8 @@
         window.onload = () => {
             addFormRow();
         };
+=======
+>>>>>>> 0c3b773bfd28832b74184e208bc4902563a4f711
     </script>
 </body>
 

@@ -12,19 +12,21 @@ a:hover{
     color: white;
 }
 
-.input{
-    padding: 20px;
-}
 .input p{
     font-size: 20px;
     text-align:justify;
 }
 
-input{
-    width: 80%;
+.input input{
+    width: 50%;
     height: 30px;
+    margin-top: 20px;
 }
 
+input{
+    width: 50%;
+    height: 30px;
+}
 .create-event{
     color: black;
     font-weight: bold;
@@ -37,47 +39,6 @@ input{
 .home{
     text-decoration: underline;
     font-weight: bold;
-}
-
-.selection1,
-.selection2,
-.selection3,
-.selection4{
-    display: flex;
-    gap: 50px;
-    padding: 20px;
-    border-color: grey;
-
-}
-
-.selection1 input,
-.selection2 input,
-.selection3 input,
-.selection4 input{
-    width: 500px;
-    height: 50px;
-    border-radius: 10px;
-}
-
-.selection1 select,
-.selection2 select ,
-.selection3 select,
-.selection4 select{
-    width: 500px;
-    border-radius: 10px;
-    background: white;
-    height: 55px;
-}
-
-.selection1 button,
-.selection2 button,
-.selection3 button,
-.selection4 button{
-    width: 500px;
-    border-radius: 1rem;
-    color: white;
-    background-color: red;
-    border-style: none;
 }
 
 button{
@@ -95,7 +56,7 @@ button{
     width: 250px;
     height: 50px;
     border-radius: 1rem;
-    margin-top: 10px;
+    margin-top: 15px;
     font-size: 15px;
 }
 

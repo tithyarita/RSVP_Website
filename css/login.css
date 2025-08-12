@@ -1,0 +1,68 @@
+body{
+    margin: 0;
+    background-color: rgb(190, 180, 180);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container{
+    background-color: white;
+    width: 30%;
+    height: 600px;
+    margin-top: 150px;
+    text-align: center;
+}
+
+
+.logo i{
+    font-size: 90px;
+    background-color: rgba(66, 145, 218, 0.858);
+    padding: 20px;
+    border-radius: 50%;
+    margin: 10px;
+    color: white;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+}
+
+.input1, .input2{
+    position: relative;
+    margin-bottom: 30px;    
+}
+
+.input1 i, .input2 i{
+    position: absolute;
+    right: 0;
+    font-size: 1.5rem;
+    padding-top: 18px;
+    margin-right: 25px;
+}
+
+input{
+    width: 500px;
+    padding: 20px;
+    border-radius: 1rem;
+}
+
+button{
+    background-color: rgba(66, 145, 218, 0.858);
+    border-style: none;
+    width: 325px;
+    margin-left: 8px;
+    height: 40px;
+    margin-top: 70px;
+    font-size: 20px;
+    color: white;
+    border-radius: 2rem;
+}
+
+h1{
+    margin-bottom: 50px;
+}
+
+
