@@ -10,6 +10,9 @@
         integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+<style>
+
+</style>
 
 <body>
     <section class="myContainer">
@@ -24,23 +27,102 @@
             <div class="input">
 
                 <div class="input1">
-                    <input type="text" placeholder="User ID" autocomplete="off">
-                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="myUserId" placeholder="User ID" autocomplete="off">
+                    <i class="fa-solid fa-user"></i><br>
+                    <span id="textId"></span>
                 </div>
 
             </div>
 
             <div class="input">
                 <div class="input2">
-                    <input type="text" placeholder="Password" autocomplete="off">
-                    <i class="fa-solid fa-key"></i>
+                    <input type="text" id="myUserPass" placeholder="Password" autocomplete="off">
+                    <i class="fa-solid fa-key"></i><br>
+                    <span id="textPass"></span>
                 </div>
             </div>
 
-            <button>LOGIN</button>
+            <button style="cursor: pointer;" id="myLoginBtn">LOGIN</button>
         </div>
     </section>
-
 </body>
+<script>
+    // userInfor
+    let userId = document.querySelector("#myUserId");
+    let userPass = document.querySelector("#myUserPass");
+
+    //spanText
+    let spanId = document.querySelector("#textId");
+    let spanPass = document.querySelector("#textPass");
+
+
+    let btnLogin = document.querySelector("#myLoginBtn");
+
+
+    btnLogin.addEventListener("click", () => {
+        if(idUseer() && idPass()){
+            window.location.href = "./home-page.html";
+        }
+        else{
+            alert("please check your filling");
+        }
+    });
+
+
+    function idUseer() {
+        let userId = document.querySelector("#myUserId").value;
+        let spanId = document.querySelector("#textId");
+
+        if (userId.length == "") {
+            spanId.textContent = "please fill your Id";
+            spanId.style.color = "blue";
+            return false;
+
+        }
+
+        else if (userId.length <= 4) {
+            spanId.textContent = "Your password are good";
+            spanId.style.color = "green";
+            return true;
+        }
+        else {
+            spanId.textContent = "please fill your id 4 characters down";
+            spanId.style.color = "red";
+            return false;
+        }
+    };
+
+    function idPass() {
+        let userPass = document.querySelector("#myUserPass").value;
+        let spanPass = document.querySelector("#textPass");
+
+        const passRegex = /^[A-Za-z0-9]{6,}$/
+        const calRegex = passRegex.test(userPass);
+
+        if(calRegex === ""){
+            spanPass.textContent = "please fill your password";
+            spanPass.style.color = "red";
+            return false;
+        }
+
+        else if (!calRegex) {
+            spanPass.textContent = "Your password might be 6 characters up";
+            spanPass.style.color = "red";
+            return false;
+        }
+        else{
+            spanPass.textContent = "Your password are cool";
+            spanPass.style.color = "blue";
+            return true;
+        }
+
+
+
+        return calRegex;
+    }
+
+    userId.addEventListener("input", idUseer);
+    userPass.addEventListener("input", idPass);
+</script>
 
 </html>
