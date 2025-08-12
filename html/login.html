@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
         integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <style>
 
@@ -28,7 +31,10 @@
 
                 <div class="input1">
                     <input type="text" id="myUserId" placeholder="User ID" autocomplete="off">
-                    <i class="fa-solid fa-user"></i><br>
+                    <i class="fa-solid fa-user"></i>
+
+                    <i id="myToggle2" style="position: absolute; right: 40px;" class="fa-solid fa-eye-slash"></i><br>
+
                     <span id="textId"></span>
                 </div>
 
@@ -36,8 +42,10 @@
 
             <div class="input">
                 <div class="input2">
-                    <input type="text" id="myUserPass" placeholder="Password" autocomplete="off">
-                    <i class="fa-solid fa-key"></i><br>
+                    <input type="password" id="myUserPass" placeholder="Password" autocomplete="off">
+                    <i class="fa-solid fa-key"></i>
+
+                    <i id="myToggle" style="position: absolute; right: 40px;" class="fa-solid fa-eye-slash"></i><br>
                     <span id="textPass"></span>
                 </div>
             </div>
@@ -47,6 +55,8 @@
     </section>
 </body>
 <script>
+
+
     // userInfor
     let userId = document.querySelector("#myUserId");
     let userPass = document.querySelector("#myUserPass");
@@ -59,21 +69,30 @@
     let btnLogin = document.querySelector("#myLoginBtn");
 
 
-    btnLogin.addEventListener("click", () => {
-        if(idUseer() && idPass()){
-            window.location.href = "./home-page.html";
+    const myPassToggle = document.querySelector("#myToggle");
+    const myIdToggle = document.querySelector("#myToggle2");
+
+
+    myPassToggle.addEventListener("click", () => {
+        if (userPass.type === "password") {
+            userPass.type = "text";
+            myPassToggle.classList.remove("fa-eye-slash");
+            myPassToggle.classList.add("fa-eye");
+        } else {
+            userPass.type = "password";
+            myPassToggle.classList.remove("fa-eye");
+            myPassToggle.classList.add("fa-eye-slash");
         }
-        else{
-            alert("please check your filling");
-        }
+
+        console.log(userPass.type)
     });
 
-
+    
     function idUseer() {
         let userId = document.querySelector("#myUserId").value;
         let spanId = document.querySelector("#textId");
 
-        if (userId.length == "") {
+        if (userId.length == 0) {
             spanId.textContent = "please fill your Id";
             spanId.style.color = "blue";
             return false;
@@ -99,7 +118,7 @@
         const passRegex = /^[A-Za-z0-9]{6,}$/
         const calRegex = passRegex.test(userPass);
 
-        if(calRegex === ""){
+        if (userPass === "") {
             spanPass.textContent = "please fill your password";
             spanPass.style.color = "red";
             return false;
@@ -110,7 +129,7 @@
             spanPass.style.color = "red";
             return false;
         }
-        else{
+        else {
             spanPass.textContent = "Your password are cool";
             spanPass.style.color = "blue";
             return true;
@@ -123,6 +142,21 @@
 
     userId.addEventListener("input", idUseer);
     userPass.addEventListener("input", idPass);
+
+
+    btnLogin.addEventListener("click", () => {
+        if (idUseer() && idPass()) {
+            window.location.href = "./home-page.html";
+            userId.value = "";
+            userPass.value = "";
+            spanId.textContent = "";
+            spanPass.textContent = "";
+        }
+        else {
+            alert("please check your filling");
+        }
+    });
+
 </script>
 
 </html>
