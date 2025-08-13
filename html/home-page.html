@@ -2,11 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/home-page.css">
     <link rel="stylesheet" href="../css/style.css">
+
     <style>
         .field-row {
             display: flex;
@@ -45,8 +46,8 @@
     <nav>
         <div class="head">
             <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"
-                    id="userProfile"></a>
-            <p id="userProfileNmae"></p>
+                    id="userProfile" /></a>
+            <p id="userProfileName"></p>
         </div>
         <ul class="ul1">
             <a class="home" href="#">
@@ -55,7 +56,7 @@
             <a href="#">
                 <li>Setting</li>
             </a>
-            <a href="#">
+            <a href="../html/login.html">
                 <li>Sign Out</li>
             </a>
         </ul>
@@ -63,7 +64,7 @@
 
     <div class="container">
         <h1>Welcome, Admin Dashboard</h1>
-        <hr class="hr">
+        <hr />
     </div>
 
     <ul class="ul2">
@@ -77,25 +78,148 @@
             <li>Event Management</li>
         </a>
     </ul>
-    <hr class="hr">
+    <hr />
 
     <div class="input">
-        <p>Event Name: <input id="eventName" type="text" placeholder="Enter Name" autocomplete="off"></p>
-        
-        <p>Event (Start Date): <input id="eventStart" type="date" autocomplete="off"></p>
-        
-        <p>Event (End Date): <input id="eventEnd" type="date" autocomplete="off"></p>
-        <hr class="hr">
+        <p>Event Name: <input id="eventName" type="text" placeholder="Enter Name" autocomplete="off" /></p>
+
+        <p>Event (Start Date): <input id="eventStart" type="date" autocomplete="off" /></p>
+
+        <p>Event (End Date): <input id="eventEnd" type="date" autocomplete="off" /></p>
+        <hr />
     </div>
 
     <h2>Form Field</h2>
     <div id="formContainer"></div>
     <button class="add-btn" id="addFieldBtn">Add Field</button>
-    <br><br>
+    <br /><br />
     <button id="saveBtn">Save The Event</button>
 
-    <script type="module" src="/js/create-list.js">
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            addDoc
+        } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
+<<<<<<< HEAD
+=======
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
+            authDomain: "rsvp-website-7541d.firebaseapp.com",
+            projectId: "rsvp-website-7541d",
+            storageBucket: "rsvp-website-7541d.firebasestorage.app",
+            messagingSenderId: "519298669065",
+            appId: "1:519298669065:web:1e43e4c598af256c2636d8",
+            measurementId: "G-MWMKYXF18R"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const myFinalImg = document.getElementById("userProfile");
+            const myFinalName = document.getElementById("userProfileName");
+
+            // Load profile image from localStorage or fallback
+            const storedImage = localStorage.getItem("userProfileImage");
+            if (storedImage) {
+                myFinalImg.src = storedImage;
+            } else {
+                myFinalImg.src = "../image/profile-removebg-preview.png";
+            }
+
+            // Load name from localStorage safely
+            const storedName = localStorage.getItem("myObj");
+            if (storedName) {
+                try {
+                    const parsed = JSON.parse(storedName);
+                    if (parsed.userFname || parsed.userLname) {
+                        myFinalName.textContent = `${parsed.userFname || ""} ${parsed.userLname || ""}`.trim();
+                    }
+                } catch {
+                    console.warn("Failed to parse 'myObj' in localStorage");
+                }
+            }
+
+            // Form elements
+            const formContainer = document.getElementById("formContainer");
+            const saveBtn = document.getElementById("saveBtn");
+            const addFieldBtn = document.getElementById("addFieldBtn");
+
+            function addFormRow() {
+                const row = document.createElement("div");
+                row.className = "field-row";
+                row.innerHTML = `
+          <select>
+            <option value="1">Text Input</option>
+            <option value="2">Email Input</option>
+            <option value="3">Dropdown List</option>
+            <option value="4">Radio Buttons</option>
+          </select>
+          <input placeholder="Field Label" />
+          <input placeholder="Options (comma-separated)" />
+          <button type="button" class="remove-btn">Remove</button>
+        `;
+
+                row.querySelector(".remove-btn").addEventListener("click", () => row.remove());
+                formContainer.appendChild(row);
+            }
+
+            addFieldBtn.addEventListener("click", addFormRow);
+
+            // Start with one field row
+            addFormRow();
+
+            saveBtn.addEventListener("click", async () => {
+                const name = document.getElementById("eventName").value.trim();
+                const startDate = document.getElementById("eventStart").value;
+                const endDate = document.getElementById("eventEnd").value;
+
+                if (!name || !startDate || !endDate) {
+                    alert("Please fill in all event details.");
+                    return;
+                }
+
+                const allRows = formContainer.querySelectorAll(".field-row");
+                const formFields = [];
+
+                allRows.forEach((row) => {
+                    const type = row.children[0].value;
+                    const label = row.children[1].value.trim();
+                    const options = row.children[2].value.trim();
+
+                    if (!label) return; // skip empty labels
+
+                    formFields.push({
+                        type: { "1": "text", "2": "email", "3": "dropdown", "4": "radio" }[type],
+                        label,
+                        options,
+                    });
+                });
+
+                const eventData = { name, startDate, endDate, fields: formFields };
+
+                try {
+                    saveBtn.disabled = true;
+                    await addDoc(collection(db, "events"), eventData);
+                    alert("✅ Event saved successfully to Firebase!");
+                    formContainer.innerHTML = "";
+                    addFormRow();
+                    document.getElementById("eventName").value = "";
+                    document.getElementById("eventStart").value = "";
+                    document.getElementById("eventEnd").value = "";
+                } catch (err) {
+                    console.error("❌ Failed to save event:", err);
+                    alert("❌ Failed to save event.");
+                } finally {
+                    saveBtn.disabled = false;
+                }
+            });
+        });
+>>>>>>> e49e4233b5a3b1abb6eccd0d29f31fd605516147
     </script>
 </body>
 
