@@ -65,6 +65,10 @@ hr{
     margin: 0;
 }
 
+input{
+    
+}
+
 @media (max-width: 640px) {
     nav {
         flex-direction: column;

@@ -2,142 +2,154 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Event List</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <style>
-        .event-card {
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event List</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .event-card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+    }
 
-        .event-card button {
-            background-color: green;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .event-card button {
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        #formPreview {
-            background: #fafafa;
-            border-radius: 8px;
-            padding: 2em;
-            margin-top: 2em;
-            max-width: 700px;
-        }
+    #formPreview {
+      background: #fafafa;
+      border-radius: 8px;
+      padding: 2em;
+      margin-top: 2em;
+      max-width: 700px;
+    }
 
-        #formPreview h2,
-        #formPreview h3 {
-            margin-top: 0;
-        }
+    #formPreview h2,
+    #formPreview h3 {
+      margin-top: 0;
+    }
 
-        .form-field {
-            margin-bottom: 1.5em;
-        }
+    .form-field {
+      margin-bottom: 1.5em;
+    }
 
-        .form-field label {
-            display: block;
-            margin-bottom: 0.5em;
-            font-weight: 500;
-        }
+    .form-field label {
+      display: block;
+      margin-bottom: 0.5em;
+      font-weight: 500;
+    }
 
-        .form-field input[type="text"],
-        .form-field input[type="email"],
-        .form-field select {
-            width: 320px;
-            padding: 8px;
-            margin-bottom: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+    .form-field input[type="text"],
+    .form-field input[type="email"],
+    .form-field select {
+      width: 320px;
+      padding: 8px;
+      margin-bottom: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
 
-        .form-field .radio-group label {
-            display: block;
-            margin-left: 1.5em;
-            margin-bottom: 0.3em;
-            font-weight: 400;
-        }
+    .form-field .radio-group label {
+      display: block;
+      margin-left: 1.5em;
+      margin-bottom: 0.3em;
+      font-weight: 400;
+    }
 
-        .event-count-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1em;
-            gap: 40px;
-        }
+    .event-count-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1em;
+      gap: 40px;
+    }
 
-        .event-count-row h2 {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin: 0;
-        }
-        .event{
-            color: black;
-            
-        }
-        #userProfile{
-            border-radius: 50%;
-        }
-    </style>
+    .event-count-row h2 {
+      font-size: 1.3em;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .event {
+      color: black;
+    }
+
+    #userProfile {
+      border-radius: 50%;
+    }
+  </style>
 </head>
 
 <body>
-    <nav>
-        <div class="head">
-            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png" alt="Profile"></a>
-            <p>Name</p>
-        </div>
-        <ul class="ul1">
-            <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;">
-                <li>Home</li>
-            </a>
-            <a href="#">
-                <li>Setting</li>
-            </a>
-            <a href="../html/login.html">
-                <li>Sign Out</li>
-            </a>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <h1>Welcome, Admin Dashboard</h1><hr class="hr">
+  <nav>
+    <div class="head">
+      <a href="../html/user.html">
+        <img id="userProfile" src="../image/profile-removebg-preview.png" alt="Profile">
+      </a>
+      <p id="userName">Name</p>
     </div>
-
-    <ul class="ul2">
-        <a class="create-event" href="home-page.html">
-            <li>Create Event</li>
-        </a>
-        <a href="./event-list.html" style="font-weight: bold; color: black; text-decoration: none;">
-        <a href="./event-list.html" class="event">
-            <li>Event</li>
-        </a>
-        <a href="all-event-responses.html">
-            <li>Event Management</li>
-        </a>
+    <ul class="ul1">
+      <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;">
+        <li>Home</li>
+      </a>
+      <a href="#">
+        <li>Setting</li>
+      </a>
+      <a href="../html/login.html">
+        <li>Sign Out</li>
+      </a>
     </ul>
-    <hr class="hr">
-    
-    <div class="event-count-row">
-        <h2 id="all-event-count">All Event: </h2>
-        <h2 id="today-event-count">Today Event: </h2>
-        <h2 id="tomorrow-event-count">Tomorrow Event: </h2>
-    </div>
-    <div id="all-event"></div>
-    <h2>Upcoming Events</h2>
-    <div id="upcomingEvents"></div>
-    <h2>Processing Events</h2>
-    <div id="processingEvents"></div>
-    <h2>Past Events</h2>
-    <div id="pastEvents"></div>
-    <div id="formPreview"></div>
+  </nav>
 
-    <script type="module" src="/js/event-list.js">
-    </script>
+  <div class="container">
+    <h1>Welcome, Admin Dashboard</h1>
+    <hr class="hr">
+  </div>
+
+  <ul class="ul2">
+    <a class="create-event" href="home-page.html">
+      <li>Create Event</li>
+    </a>
+    <a href="./event-list.html" class="event" style="font-weight: bold; color: black; text-decoration: none;">
+      <li>Event</li>
+    </a>
+    <a href="all-event-responses.html">
+      <li>Event Management</li>
+    </a>
+  </ul>
+  <hr class="hr">
+
+  <div class="event-count-row">
+    <h2 id="all-event-count">All Event: </h2>
+    <h2 id="today-event-count">Today Event: </h2>
+    <h2 id="tomorrow-event-count">Tomorrow Event: </h2>
+  </div>
+
+  <div id="all-event"></div>
+  <h2>Upcoming Events</h2>
+  <div id="upcomingEvents"></div>
+  <h2>Processing Events</h2>
+  <div id="processingEvents"></div>
+  <h2>Past Events</h2>
+  <div id="pastEvents"></div>
+  <div id="formPreview"></div>
+
+  <script>
+    // Load admin name + profile from sessionStorage
+    const adminName = sessionStorage.getItem("adminName") || "Admin";
+    const adminProfile = sessionStorage.getItem("adminProfile") || "../image/profile-removebg-preview.png";
+
+    document.getElementById("userName").textContent = adminName;
+    document.getElementById("userProfile").src = adminProfile;
+  </script>
+
+  <script type="module" src="/js/event-list.js"></script>
 </body>
 </html>

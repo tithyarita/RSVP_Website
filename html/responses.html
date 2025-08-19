@@ -5,125 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Responses for Event</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      margin: 0;
-    }
-    /* Your existing styles ... */
-    h1 {
-      margin-bottom: 15px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-      font-size: 16px;
-    }
-    th {
-      background: #f0f0f0;
-      font-weight: bold;
-    }
-    body{
-    margin: 0;
-    padding: 30px;
-    bottom: 20px;
-}
-.p1{
-    color: gray;
-}
-
-nav{
-    display: flex;
-    justify-content: space-between;
-    background-color: rgba(66, 145, 218, 0.858);
-    position: fixed;
-    width: 100%;
-    margin-top: -30px;
-    margin-left: -30px;
-}
-
-.head{
-    display: flex;
-    gap: 20px;
-    font-weight: bold;
-    padding: 15px;
-}
-
-ul{
-    display: flex;
-    gap: 100px;
-    justify-content: center;
-    list-style: none;
-    margin-right: 50px;
-    padding: 15px;
-}
-
-.ul1 a{
-    color: black;
-}
-
-nav img{
-    width: 50px;
-    height: 50px;
-}
-
-
-.container h1{
-    padding-top: 110px;
-}
-
-a{
-    text-decoration: none;
-    color: gray;
-}
-
-a:hover{
-    text-decoration:underline;
-}
-
-hr{
-    color: white;
-}
-
-.ul2{
-    font-size: 25px;
-    margin: 0;
-}
+    body { font-family: Arial, sans-serif; padding: 20px; margin: 0; }
+    nav { display: flex; justify-content: space-between; background-color: rgba(66,145,218,0.85); position: fixed; width: 100%; margin-top: -30px; margin-left: -30px; }
+    .head { display: flex; gap: 20px; font-weight: bold; padding: 15px; }
+    ul { display: flex; gap: 100px; justify-content: center; list-style: none; margin-right: 50px; padding: 15px; }
+    .ul1 a { color: black; }
+    nav img { width: 50px; height: 50px; }
+    .container h1 { padding-top: 110px; }
+    a { text-decoration: none; color: gray; }
+    a:hover { text-decoration: underline; }
+    hr { color: white; }
+    .ul2 { font-size: 25px; margin: 0; }
+    .event-card { margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 10px; background: #f9f9f9; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .event-card h2 { margin: 0; font-size: 22px; color: #333; }
+    .event-card p { margin: 5px 0; font-size: 16px; color: #555; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; font-size: 16px; }
+    th { background: #f0f0f0; font-weight: bold; }
   </style>
 </head>
 <body>
-     <nav>
-        <div class="head">
-            <a href="../html/user.html"><img src="../image/profile-removebg-preview.png"></a>
-            <p>Name</p>
-        </div>
-        
-        <ul class="ul1">
-            <a class="home" href="#" style="font-weight: bold; text-decoration-line: underline;"><li>Home</li></a>
-            <a href="#"><li>Setting</li></a>
-            <a href="#"><li>Sign Out</li></a>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <h1>Welcome, Admin Dashboard</h1><hr class="hr">
+  <nav>
+    <div class="head">
+      <a href="../html/user.html"><img src="../image/profile-removebg-preview.png"></a>
+      <p>Name</p>
     </div>
+    <ul class="ul1">
+      <a class="home" href="#" style="font-weight:bold;text-decoration-line:underline;"><li>Home</li></a>
+      <a href="#"><li>Setting</li></a>
+      <a href="#"><li>Sign Out</li></a>
+    </ul>
+  </nav>
 
-    <ul class="ul2">
-        <a class="create-event" href="home-page.html"><li>Create Event</li></a>
-        <a href="event-list.html" style="font-weight: bold; color: black; text-decoration: none;"><li>Event</li></a>
-        <a href="all-event-responses.html"><li>Event management</li></a>
-    </ul><hr class="hr">
+  <div class="container">
+    <h1>Welcome, Admin Dashboard</h1>
+    <hr class="hr">
+  </div>
 
+  <ul class="ul2">
+    <a class="create-event" href="home-page.html"><li>Create Event</li></a>
+    <a href="event-list.html" style="font-weight:bold;color:black;text-decoration:none;"><li>Event</li></a>
+    <a href="all-event-responses.html"><li>Event management</li></a>
+  </ul>
+  <hr class="hr">
 
-  <!-- Your navbar and header here (omitted for brevity) -->
+  <div class="event-card" id="event-info">
+    <h2>Loading event...</h2>
+    <p>Start Date: --</p>
+    <p>End Date: --</p>
+  </div>
 
+  <button id="addUserBtn" style="margin-top:20px;">Add User</button>
   <h1 id="response-count">Responses</h1>
 
   <table id="response-table">
@@ -132,12 +64,24 @@ hr{
       <th>First Name</th>
       <th>Last Name</th>
       <th>Join Since</th>
+      <th>Actions</th>
     </tr>
   </table>
 
+  <div id="userModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;">
+    <div style="background:#fff;padding:20px;border-radius:10px;min-width:300px;">
+      <h3 id="modalTitle">Add User</h3>
+      <input type="text" id="emailInput" autocomplete="off" placeholder="Email" style="width:100%;margin-bottom:10px;padding:5px;">
+      <input type="text" id="firstNameInput" autocomplete="off" placeholder="First Name" style="width:100%;margin-bottom:10px;padding:5px;">
+      <input type="text" id="lastNameInput" autocomplete="off" placeholder="Last Name" style="width:100%;margin-bottom:10px;padding:5px;">
+      <button id="saveUserBtn">Save</button>
+      <button id="cancelBtn">Cancel</button>
+    </div>
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, getDoc, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBAYWnichIFDWP4EOv3RyZFNqzyUtROCeI",
@@ -153,74 +97,113 @@ hr{
     const db = getFirestore(app);
 
     let responses = [];
+    const eventId = new URLSearchParams(window.location.search).get('id');
+    let currentEditId = null;
 
-    // Helper: get event id from URL param
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    }
-
-    // Render table from current `responses` array
-    function renderTable() {
-      const table = document.getElementById('response-table');
-      while (table.rows.length > 1) table.deleteRow(1);
-
-      const eventId = getQueryParam('id');
-
-      const filteredResponses = eventId
-          ? responses.filter(r => r.eventId === eventId)
-          : responses;
-
-      filteredResponses.forEach(resp => {
-        const row = table.insertRow();
-        const email = resp.answers?.["Email"] || '';
-        const firstName = resp.answers?.["First Name"] || '';
-        const lastName = resp.answers?.["Last Name"] || '';
-        let joinSince = '';
-        if (resp.submittedAt) {
-          try {
-            joinSince = new Date(resp.submittedAt).toLocaleDateString();
-          } catch {}
-        }
-        row.insertCell().textContent = email;
-        row.insertCell().textContent = firstName;
-        row.insertCell().textContent = lastName;
-        row.insertCell().textContent = joinSince;
-      });
-
-      document.getElementById('response-count').textContent = `${filteredResponses.length} Responses`;
-    }
-
-    // Load responses from localStorage and render immediately
-    function loadFromLocalStorage() {
-      const cached = localStorage.getItem('cachedResponses');
-      if (cached) {
-        try {
-          responses = JSON.parse(cached);
-          renderTable();
-        } catch {
-          responses = [];
-        }
+    async function loadEvent() {
+      if (!eventId) return document.getElementById('event-info').innerHTML = "<h2>No Event Selected</h2>";
+      const eventDoc = await getDoc(doc(db, "events", eventId));
+      if (eventDoc.exists()) {
+        const e = eventDoc.data();
+        const start = e.startDate?.toDate ? e.startDate.toDate().toLocaleDateString() : e.startDate || "N/A";
+        const end = e.endDate?.toDate ? e.endDate.toDate().toLocaleDateString() : e.endDate || "N/A";
+        document.getElementById('event-info').innerHTML = `
+          <h2>${e.name}</h2>
+          <p>Start Date: ${start}</p>
+          <p>End Date: ${end}</p>
+        `;
+      } else {
+        document.getElementById('event-info').innerHTML = "<h2>Event not found</h2>";
       }
     }
 
-    // Fetch fresh responses from Firebase, update localStorage and UI
-    async function fetchFromFirebase() {
+    async function loadResponses() {
       const responseSnap = await getDocs(collection(db, "responses"));
-      const freshResponses = [];
-      responseSnap.forEach(doc => {
-        freshResponses.push(doc.data());
+      responses = [];
+      responseSnap.forEach(docSnap => {
+        const data = docSnap.data();
+        if (data.eventId === eventId) responses.push({id: docSnap.id, ...data});
       });
-
-      responses = freshResponses;
-      localStorage.setItem('cachedResponses', JSON.stringify(responses));
-      renderTable();
+      renderResponses();
     }
 
-    // On page load: load cached first, then update from Firebase
-    loadFromLocalStorage();
-    fetchFromFirebase();
+    function renderResponses() {
+      const table = document.getElementById('response-table');
+      while (table.rows.length > 1) table.deleteRow(1);
 
+      responses.forEach(r => {
+        const row = table.insertRow();
+        row.insertCell().textContent = r.answers?.["Email"] || '';
+        row.insertCell().textContent = r.answers?.["First Name"] || '';
+        row.insertCell().textContent = r.answers?.["Last Name"] || '';
+        row.insertCell().textContent = r.submittedAt ? new Date(r.submittedAt).toLocaleDateString() : '';
+
+        const actionsCell = row.insertCell();
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.onclick = () => openModal(r.id);
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.onclick = () => deleteUser(r.id);
+        actionsCell.append(editBtn, deleteBtn);
+      });
+
+      document.getElementById('response-count').textContent = `${responses.length} Responses`;
+    }
+
+    document.getElementById('addUserBtn').onclick = () => openModal();
+    document.getElementById('cancelBtn').onclick = () => document.getElementById('userModal').style.display='none';
+
+    function openModal(id=null) {
+      currentEditId = id;
+      const modal = document.getElementById('userModal');
+      modal.style.display = 'flex';
+      if (id) {
+        const user = responses.find(u => u.id === id);
+        document.getElementById('modalTitle').textContent = 'Edit User';
+        document.getElementById('emailInput').value = user.answers?.["Email"] || '';
+        document.getElementById('firstNameInput').value = user.answers?.["First Name"] || '';
+        document.getElementById('lastNameInput').value = user.answers?.["Last Name"] || '';
+      } else {
+        document.getElementById('modalTitle').textContent = 'Add User';
+        document.getElementById('emailInput').value = '';
+        document.getElementById('firstNameInput').value = '';
+        document.getElementById('lastNameInput').value = '';
+      }
+    }
+
+    document.getElementById('saveUserBtn').onclick = async () => {
+      const email = document.getElementById('emailInput').value.trim();
+      const firstName = document.getElementById('firstNameInput').value.trim();
+      const lastName = document.getElementById('lastNameInput').value.trim();
+      if (!email) return alert("Email is required");
+
+      const userData = {
+        answers: {Email: email, "First Name": firstName, "Last Name": lastName},
+        submittedAt: new Date().toISOString(),
+        eventId
+      };
+
+      if (currentEditId) {
+        await setDoc(doc(db, "responses", currentEditId), userData);
+      } else {
+        const newDoc = doc(collection(db, "responses"));
+        await setDoc(newDoc, userData);
+      }
+
+      document.getElementById('userModal').style.display='none';
+      loadResponses();
+    }
+
+    async function deleteUser(id) {
+      if (!confirm("Are you sure to delete this user?")) return;
+      await deleteDoc(doc(db, "responses", id));
+      loadResponses();
+    }
+
+    // Initialize page
+    loadEvent();
+    loadResponses();
   </script>
 </body>
 </html>
